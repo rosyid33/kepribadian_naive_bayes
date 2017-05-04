@@ -1,0 +1,9 @@
+<?php
+    session_start();
+    unset($_SESSION['kepribadian_naive_bayes_id']);
+    unset($_SESSION['kepribadian_naive_bayes_username']);
+    unset($_SESSION['kepribadian_naive_bayes_level']);
+    unset($_SESSION['kepribadian_naive_bayes_key']);
+    unset($_SESSION['kepribadian_naive_bayes_last_login']);
+    session_destroy();
+    header("location:login.php");
