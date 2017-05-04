@@ -30,7 +30,8 @@
 				else $gagal++;
 		}		
 		header('location:index.php?menu=data-latih');
-	}else if($dataUpload=='uji'){
+	}
+        else if($dataUpload=='uji'){
 		//membaca file excel yang diupload
 		$data = new Spreadsheet_Excel_Reader($_FILES['userfile']['tmp_name']);
 		//membaca jumlah baris dari data excel
@@ -56,7 +57,8 @@
 				else $gagal++;
 		}		
 		header('location:index.php?menu=data-uji');
-	}else if($dataUpload=='user'){
+	}
+        else if($dataUpload=='user'){
 		//membaca file excel yang diupload
 		$data = new Spreadsheet_Excel_Reader($_FILES['userfile']['tmp_name']);
 		//membaca jumlah baris dari data excel
