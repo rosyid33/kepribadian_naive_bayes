@@ -36,16 +36,22 @@ if(isset($_GET['menu'])){
                         else{
                             if($_SESSION['kepribadian_naive_bayes_level'] == 2){
                                 ?>
-                                <li><a href="index.php?menu=klasifikasi">Klasifikasi</a></li>
+                                <li><a <?php echo ($menu=='klasifikasi')?"class='menu-top-active'":""; ?>
+                                        href="index.php?menu=klasifikasi">Klasifikasi</a></li>
                                 <?php
                             }
                             else{
                                 ?>
-                                <li><a href="index.php?menu=data_latih">Data Latih</a></li>
-                                <li><a href="index.php?menu=uji_akurasi">Uji Akurasi</a></li>
-                                <li><a href="index.php?menu=klasifikasi">Klasifikasi</a></li>
-                                <li><a href="index.php?menu=laporan_hasil">Laporan Hasil Klasifikasi</a></li>
-                                <li><a href="index.php?menu=data_user">Data User Siswa</a></li>
+                                <li><a <?php echo ($menu=='data_latih')?"class='menu-top-active'":""; ?>
+                                        href="index.php?menu=data_latih">Data Latih</a></li>
+                                <li><a <?php echo ($menu=='uji_akurasi')?"class='menu-top-active'":""; ?> 
+                                        href="index.php?menu=uji_akurasi">Uji Akurasi</a></li>
+                                <li><a <?php echo ($menu=='klasifikasi')?"class='menu-top-active'":""; ?> 
+                                        href="index.php?menu=klasifikasi">Klasifikasi</a></li>
+                                <li><a <?php echo ($menu=='laporan_hasil')?"class='menu-top-active'":""; ?> 
+                                        href="index.php?menu=laporan_hasil">Laporan Hasil Klasifikasi</a></li>
+                                <li><a <?php echo ($menu=='data_user')?"class='menu-top-active'":""; ?> 
+                                        href="index.php?menu=data_user">Data User Siswa</a></li>
                                 <?php
                             }
                             ?>
