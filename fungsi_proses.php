@@ -74,7 +74,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 
 	echo "<br>";
 	//------------------------------------------------------------------------------
-	//jumlah atribut bibit
+	//jumlah atribut sekolah
 	$jumlah_sekolah_swasta_sanguin = jumlah_data_latih($db_object, " WHERE sekolah='Swasta' AND kelas_asli='Sanguin'");
         $jumlah_sekolah_swasta_koleris = jumlah_data_latih($db_object, " WHERE sekolah='Swasta' AND kelas_asli='Koleris'");
         $jumlah_sekolah_swasta_melankolis = jumlah_data_latih($db_object, " WHERE sekolah='Swasta' AND kelas_asli='Melankolis'");
@@ -85,7 +85,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         $jumlah_sekolah_negeri_melankolis = jumlah_data_latih($db_object, " WHERE sekolah='Negeri' AND kelas_asli='Melankolis'");
         $jumlah_sekolah_negeri_plegmatis = jumlah_data_latih($db_object, " WHERE sekolah='Negeri' AND kelas_asli='Plegmatis'");
         
-	//probabilitas atribut bibit
+	//probabilitas atribut sekolah
 	$p_sekolah_swasta_sanguin = $jumlah_sekolah_swasta_sanguin/$jumlah_sanguin;
 	$p_sekolah_swasta_koleris = $jumlah_sekolah_swasta_koleris/$jumlah_koleris;
         $p_sekolah_swasta_melankolis = $jumlah_sekolah_swasta_melankolis/$jumlah_melankolis;
@@ -95,7 +95,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$p_sekolah_negeri_koleris = $jumlah_sekolah_negeri_koleris/$jumlah_koleris;
 	$p_sekolah_negeri_melankolis = $jumlah_sekolah_negeri_melankolis/$jumlah_melankolis;
 	$p_sekolah_negeri_plegmatis = $jumlah_sekolah_negeri_plegmatis/$jumlah_plegmatis;
-	//display table probabilitas bibit
+	//display table probabilitas sekolah
 	echo "<table class='table table-bordered table-striped  table-hover' style='width:40%'>";
 		echo "<tr>";
 			echo "<td><b><u>Sekolah:</u></b></td>";
@@ -132,13 +132,13 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         //xusia  plegmatis
 	$jumlah_usia_plegmatis = get_jumlah_sum_atribut($db_object, "usia", "Plegmatis");
 	$x_usia_plegmatis = $jumlah_usia_plegmatis/$jumlah_plegmatis;
-
+        echo "<br>";
+        echo "<strong><u>Atribut Usia:<br></u></strong>";
 	echo "X Usia Sanguin=".number_format($x_usia_sanguin, dec())."<br>";
 	echo "X Usia Koleris=".number_format($x_usia_koleris, dec())."<br>";
         echo "X Usia Melankolis=".number_format($x_usia_melankolis, dec())."<br>";
         echo "X Usia Plegmatis=".number_format($x_usia_plegmatis, dec())."<br>";
 	echo "<br>";
-        
 	//S2usia Sanguin
 	$s2_usia_sanguin = get_s2_populasi($db_object, 'usia', 'Sanguin', $x_usia_sanguin, $jumlah_sanguin);
 	//S2usia Koleris
@@ -147,12 +147,10 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$s2_usia_melankolis = get_s2_populasi($db_object, 'usia', 'Melankolis', $x_usia_melankolis, $jumlah_melankolis);
         //S2usia Koleris
 	$s2_usia_plegmatis = get_s2_populasi($db_object, 'usia', 'Plegmatis', $x_usia_plegmatis, $jumlah_plegmatis);
-        
 	echo "S2 Usia Sanguin=".number_format($s2_usia_sanguin, dec())."<br>";
 	echo "S2 Usia Koleris=".number_format($s2_usia_koleris, dec())."<br>";
         echo "S2 Usia Melankolis=".number_format($s2_usia_melankolis, dec())."<br>";
         echo "S2 Usia Plegmatis=".number_format($s2_usia_plegmatis, dec())."<br>";
-
 	echo "<br>";
 	//S usia Sanguin
 	$s_usia_sanguin = sqrt($s2_usia_sanguin);
@@ -162,14 +160,199 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$s_usia_melankolis = sqrt($s2_usia_melankolis);
         //S usia Plegmatis
 	$s_usia_plegmatis = sqrt($s2_usia_plegmatis);
-        
 	echo "S Usia Sanguin=".number_format($s_usia_sanguin, dec())."<br>";
 	echo "S Usia Koleris=".number_format($s_usia_koleris, dec())."<br>";
         echo "S Usia Melankolis=".number_format($s_usia_melankolis, dec())."<br>";
         echo "S Usia Plegmatis=".number_format($s_usia_plegmatis, dec())."<br>";
 
-        
+        //======================================================================
+        //jawaban_a
+        //x jawaban_a sanguin
+	$jumlah_jawaban_a_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_a", "Sanguin");
+	$x_jawaban_a_sanguin = $jumlah_jawaban_a_sanguin/$jumlah_sanguin;
+	//x jawaban_a  koleris
+	$jumlah_jawaban_a_koleris = get_jumlah_sum_atribut($db_object, "jawaban_a", "Koleris");
+	$x_jawaban_a_koleris = $jumlah_jawaban_a_koleris/$jumlah_koleris;
+        //x jawaban_a  melankolis
+	$jumlah_jawaban_a_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_a", "Melankolis");
+	$x_jawaban_a_melankolis = $jumlah_jawaban_a_melankolis/$jumlah_melankolis;
+        //x jawaban_a  plegmatis
+	$jumlah_jawaban_a_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_a", "Plegmatis");
+	$x_jawaban_a_plegmatis = $jumlah_jawaban_a_plegmatis/$jumlah_plegmatis;
+        echo "<br>";
+        echo "<strong><u>Atribut Jawaban A:<br></u></strong>";
+	echo "X Jawaban A Sanguin=".number_format($x_jawaban_a_sanguin, dec())."<br>";
+	echo "X Jawaban A Koleris=".number_format($x_jawaban_a_koleris, dec())."<br>";
+        echo "X Jawaban A Melankolis=".number_format($x_jawaban_a_melankolis, dec())."<br>";
+        echo "X Jawaban A Plegmatis=".number_format($x_jawaban_a_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S2 jawaban_a Sanguin
+	$s2_jawaban_a_sanguin = get_s2_populasi($db_object, 'jawaban_a', 'Sanguin', $x_jawaban_a_sanguin, $jumlah_sanguin);
+	//S2 jawaban_a Koleris
+	$s2_jawaban_a_koleris = get_s2_populasi($db_object, 'jawaban_a', 'Koleris', $x_jawaban_a_koleris, $jumlah_koleris);
+        //S2 jawaban_a Melankolis
+	$s2_jawaban_a_melankolis = get_s2_populasi($db_object, 'jawaban_a', 'Melankolis', $x_jawaban_a_melankolis, $jumlah_melankolis);
+        //S2 jawaban_a Koleris
+	$s2_jawaban_a_plegmatis = get_s2_populasi($db_object, 'jawaban_a', 'Plegmatis', $x_jawaban_a_plegmatis, $jumlah_plegmatis);
+	echo "S2 Jawaban A Sanguin=".number_format($s2_jawaban_a_sanguin, dec())."<br>";
+	echo "S2 Jawaban A Koleris=".number_format($s2_jawaban_a_koleris, dec())."<br>";
+        echo "S2 Jawaban A Melankolis=".number_format($s2_jawaban_a_melankolis, dec())."<br>";
+        echo "S2 Jawaban A Plegmatis=".number_format($s2_jawaban_a_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S jawaban_a Sanguin
+	$s_jawaban_a_sanguin = sqrt($s2_jawaban_a_sanguin);
+	//S jawaban_a Koleris
+	$s_jawaban_a_koleris = sqrt($s2_jawaban_a_koleris);
+        //S jawaban_a Melankolis
+	$s_jawaban_a_melankolis = sqrt($s2_jawaban_a_melankolis);
+        //S jawaban_a Plegmatis
+	$s_jawaban_a_plegmatis = sqrt($s2_jawaban_a_plegmatis);
+	echo "S Jawaban A Sanguin=".number_format($s_jawaban_a_sanguin, dec())."<br>";
+	echo "S Jawaban A Koleris=".number_format($s_jawaban_a_koleris, dec())."<br>";
+        echo "S Jawaban A Melankolis=".number_format($s_jawaban_a_melankolis, dec())."<br>";
+        echo "S Jawaban A Plegmatis=".number_format($s_jawaban_a_plegmatis, dec())."<br>";
+        //==================================================
+        //jawaban_b
+        //x jawaban_b sanguin
+	$jumlah_jawaban_b_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_b", "Sanguin");
+	$x_jawaban_b_sanguin = $jumlah_jawaban_b_sanguin/$jumlah_sanguin;
+	//x jawaban_b  koleris
+	$jumlah_jawaban_b_koleris = get_jumlah_sum_atribut($db_object, "jawaban_b", "Koleris");
+	$x_jawaban_b_koleris = $jumlah_jawaban_b_koleris/$jumlah_koleris;
+        //x jawaban_b  melankolis
+	$jumlah_jawaban_b_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_b", "Melankolis");
+	$x_jawaban_b_melankolis = $jumlah_jawaban_b_melankolis/$jumlah_melankolis;
+        //x jawaban_b  plegmatis
+	$jumlah_jawaban_b_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_b", "Plegmatis");
+	$x_jawaban_b_plegmatis = $jumlah_jawaban_b_plegmatis/$jumlah_plegmatis;
+        echo "<br>";
+        echo "<strong><u>Atribut Jawaban B:<br></u></strong>";
+	echo "X Jawaban B Sanguin=".number_format($x_jawaban_b_sanguin, dec())."<br>";
+	echo "X Jawaban B Koleris=".number_format($x_jawaban_b_koleris, dec())."<br>";
+        echo "X Jawaban B Melankolis=".number_format($x_jawaban_b_melankolis, dec())."<br>";
+        echo "X Jawaban B Plegmatis=".number_format($x_jawaban_b_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S2 jawaban_b Sanguin
+	$s2_jawaban_b_sanguin = get_s2_populasi($db_object, 'jawaban_b', 'Sanguin', $x_jawaban_b_sanguin, $jumlah_sanguin);
+	//S2 jawaban_b Koleris
+	$s2_jawaban_b_koleris = get_s2_populasi($db_object, 'jawaban_b', 'Koleris', $x_jawaban_b_koleris, $jumlah_koleris);
+        //S2 jawaban_b Melankolis
+	$s2_jawaban_b_melankolis = get_s2_populasi($db_object, 'jawaban_b', 'Melankolis', $x_jawaban_b_melankolis, $jumlah_melankolis);
+        //S2 jawaban_b Koleris
+	$s2_jawaban_b_plegmatis = get_s2_populasi($db_object, 'jawaban_b', 'Plegmatis', $x_jawaban_b_plegmatis, $jumlah_plegmatis);
+	echo "S2 Jawaban B Sanguin=".number_format($s2_jawaban_b_sanguin, dec())."<br>";
+	echo "S2 Jawaban B Koleris=".number_format($s2_jawaban_b_koleris, dec())."<br>";
+        echo "S2 Jawaban B Melankolis=".number_format($s2_jawaban_b_melankolis, dec())."<br>";
+        echo "S2 Jawaban B Plegmatis=".number_format($s2_jawaban_b_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S jawaban_b Sanguin
+	$s_jawaban_b_sanguin = sqrt($s2_jawaban_b_sanguin);
+	//S jawaban_b Koleris
+	$s_jawaban_b_koleris = sqrt($s2_jawaban_b_koleris);
+        //S jawaban_b Melankolis
+	$s_jawaban_b_melankolis = sqrt($s2_jawaban_b_melankolis);
+        //S jawaban_b Plegmatis
+	$s_jawaban_b_plegmatis = sqrt($s2_jawaban_b_plegmatis);
+	echo "S Jawaban B Sanguin=".number_format($s_jawaban_b_sanguin, dec())."<br>";
+	echo "S Jawaban B Koleris=".number_format($s_jawaban_b_koleris, dec())."<br>";
+        echo "S Jawaban B Melankolis=".number_format($s_jawaban_b_melankolis, dec())."<br>";
+        echo "S Jawaban B Plegmatis=".number_format($s_jawaban_b_plegmatis, dec())."<br>";
+        //========================================================
+        //jawaban_c
+        //x jawaban_c sanguin
+	$jumlah_jawaban_c_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_c", "Sanguin");
+	$x_jawaban_c_sanguin = $jumlah_jawaban_c_sanguin/$jumlah_sanguin;
+	//x jawaban_c  koleris
+	$jumlah_jawaban_c_koleris = get_jumlah_sum_atribut($db_object, "jawaban_c", "Koleris");
+	$x_jawaban_c_koleris = $jumlah_jawaban_c_koleris/$jumlah_koleris;
+        //x jawaban_c  melankolis
+	$jumlah_jawaban_c_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_c", "Melankolis");
+	$x_jawaban_c_melankolis = $jumlah_jawaban_c_melankolis/$jumlah_melankolis;
+        //x jawaban_c  plegmatis
+	$jumlah_jawaban_c_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_c", "Plegmatis");
+	$x_jawaban_c_plegmatis = $jumlah_jawaban_c_plegmatis/$jumlah_plegmatis;
+        echo "<br>";
+        echo "<strong><u>Atribut Jawaban C:<br></u></strong>";
+	echo "X Jawaban C Sanguin=".number_format($x_jawaban_c_sanguin, dec())."<br>";
+	echo "X Jawaban C Koleris=".number_format($x_jawaban_c_koleris, dec())."<br>";
+        echo "X Jawaban C Melankolis=".number_format($x_jawaban_c_melankolis, dec())."<br>";
+        echo "X Jawaban C Plegmatis=".number_format($x_jawaban_c_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S2 jawaban_c Sanguin
+	$s2_jawaban_c_sanguin = get_s2_populasi($db_object, 'jawaban_c', 'Sanguin', $x_jawaban_c_sanguin, $jumlah_sanguin);
+	//S2 jawaban_c Koleris
+	$s2_jawaban_c_koleris = get_s2_populasi($db_object, 'jawaban_c', 'Koleris', $x_jawaban_c_koleris, $jumlah_koleris);
+        //S2 jawaban_c Melankolis
+	$s2_jawaban_c_melankolis = get_s2_populasi($db_object, 'jawaban_c', 'Melankolis', $x_jawaban_c_melankolis, $jumlah_melankolis);
+        //S2 jawaban_c Koleris
+	$s2_jawaban_c_plegmatis = get_s2_populasi($db_object, 'jawaban_c', 'Plegmatis', $x_jawaban_c_plegmatis, $jumlah_plegmatis);
+	echo "S2 Jawaban C Sanguin=".number_format($s2_jawaban_c_sanguin, dec())."<br>";
+	echo "S2 Jawaban C Koleris=".number_format($s2_jawaban_c_koleris, dec())."<br>";
+        echo "S2 Jawaban C Melankolis=".number_format($s2_jawaban_c_melankolis, dec())."<br>";
+        echo "S2 Jawaban C Plegmatis=".number_format($s2_jawaban_c_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S jawaban_c Sanguin
+	$s_jawaban_c_sanguin = sqrt($s2_jawaban_c_sanguin);
+	//S jawaban_c Koleris
+	$s_jawaban_c_koleris = sqrt($s2_jawaban_c_koleris);
+        //S jawaban_c Melankolis
+	$s_jawaban_c_melankolis = sqrt($s2_jawaban_c_melankolis);
+        //S jawaban_c Plegmatis
+	$s_jawaban_c_plegmatis = sqrt($s2_jawaban_c_plegmatis);
+	echo "S Jawaban C Sanguin=".number_format($s_jawaban_c_sanguin, dec())."<br>";
+	echo "S Jawaban C Koleris=".number_format($s_jawaban_c_koleris, dec())."<br>";
+        echo "S Jawaban C Melankolis=".number_format($s_jawaban_c_melankolis, dec())."<br>";
+        echo "S Jawaban C Plegmatis=".number_format($s_jawaban_c_plegmatis, dec())."<br>";
+        //===============================================================
+        //x jawaban_d sanguin
+	$jumlah_jawaban_d_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_d", "Sanguin");
+	$x_jawaban_d_sanguin = $jumlah_jawaban_d_sanguin/$jumlah_sanguin;
+	//x jawaban_d  koleris
+	$jumlah_jawaban_d_koleris = get_jumlah_sum_atribut($db_object, "jawaban_d", "Koleris");
+	$x_jawaban_d_koleris = $jumlah_jawaban_d_koleris/$jumlah_koleris;
+        //x jawaban_d  melankolis
+	$jumlah_jawaban_d_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_d", "Melankolis");
+	$x_jawaban_d_melankolis = $jumlah_jawaban_d_melankolis/$jumlah_melankolis;
+        //x jawaban_d  plegmatis
+	$jumlah_jawaban_d_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_d", "Plegmatis");
+	$x_jawaban_d_plegmatis = $jumlah_jawaban_d_plegmatis/$jumlah_plegmatis;
+        echo "<br>";
+        echo "<strong><u>Atribut Jawaban D:<br></u></strong>";
+	echo "X Jawaban D Sanguin=".number_format($x_jawaban_d_sanguin, dec())."<br>";
+	echo "X Jawaban D Koleris=".number_format($x_jawaban_d_koleris, dec())."<br>";
+        echo "X Jawaban D Melankolis=".number_format($x_jawaban_d_melankolis, dec())."<br>";
+        echo "X Jawaban D Plegmatis=".number_format($x_jawaban_d_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S2 jawaban_d Sanguin
+	$s2_jawaban_d_sanguin = get_s2_populasi($db_object, 'jawaban_d', 'Sanguin', $x_jawaban_d_sanguin, $jumlah_sanguin);
+	//S2 jawaban_d Koleris
+	$s2_jawaban_d_koleris = get_s2_populasi($db_object, 'jawaban_d', 'Koleris', $x_jawaban_d_koleris, $jumlah_koleris);
+        //S2 jawaban_d Melankolis
+	$s2_jawaban_d_melankolis = get_s2_populasi($db_object, 'jawaban_d', 'Melankolis', $x_jawaban_d_melankolis, $jumlah_melankolis);
+        //S2 jawaban_d Koleris
+	$s2_jawaban_d_plegmatis = get_s2_populasi($db_object, 'jawaban_d', 'Plegmatis', $x_jawaban_d_plegmatis, $jumlah_plegmatis);
+	echo "S2 Jawaban D Sanguin=".number_format($s2_jawaban_d_sanguin, dec())."<br>";
+	echo "S2 Jawaban D Koleris=".number_format($s2_jawaban_d_koleris, dec())."<br>";
+        echo "S2 Jawaban D Melankolis=".number_format($s2_jawaban_d_melankolis, dec())."<br>";
+        echo "S2 Jawaban D Plegmatis=".number_format($s2_jawaban_d_plegmatis, dec())."<br>";
+	echo "<br>";
+	//S jawaban_d Sanguin
+	$s_jawaban_d_sanguin = sqrt($s2_jawaban_d_sanguin);
+	//S jawaban_d Koleris
+	$s_jawaban_d_koleris = sqrt($s2_jawaban_d_koleris);
+        //S jawaban_d Melankolis
+	$s_jawaban_d_melankolis = sqrt($s2_jawaban_d_melankolis);
+        //S jawaban_d Plegmatis
+	$s_jawaban_d_plegmatis = sqrt($s2_jawaban_d_plegmatis);
+	echo "S Jawaban D Sanguin=".number_format($s_jawaban_d_sanguin, dec())."<br>";
+	echo "S Jawaban D Koleris=".number_format($s_jawaban_d_koleris, dec())."<br>";
+        echo "S Jawaban D Melankolis=".number_format($s_jawaban_d_melankolis, dec())."<br>";
+        echo "S Jawaban D Plegmatis=".number_format($s_jawaban_d_plegmatis, dec())."<br>";
+        //======================================================================
+        //#HITUNG PROBABILITAS DENGAN DATA UJI
+        echo "<strong><h3>Probabilitas<br></h3></strong>";
 	$satu_per_akar_dua_phi = 1/(sqrt(2*3.14));
+        //#usia
         //sanguin
 	$depan_usia_sanguin = 1/($satu_per_akar_dua_phi*$s_usia_sanguin);
 	$belakang_usia_sanguin = exp( ((pow($usia-$x_usia_sanguin,2)) / (2*$s2_usia_sanguin)) * -1);
@@ -186,7 +369,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$depan_usia_plegmatis = 1/($satu_per_akar_dua_phi*$s_usia_plegmatis);
 	$belakang_usia_plegmatis = exp( ((pow($usia-$x_usia_plegmatis,2)) / (2*$s2_usia_plegmatis)) * -1);
 	$prob_usia_plegmatis = $depan_usia_plegmatis * $belakang_usia_plegmatis;
-
+        //display
 	echo "<br>";
 	echo "P(usia|Sanguin)=".number_format($prob_usia_sanguin, dec())."<br>";
 	echo "P(usia|Koleris)=".number_format($prob_usia_koleris, dec())."<br>";
@@ -216,55 +399,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         echo "P(sekolah|Plegmatis)=".number_format($prob_sekolah_plegmatis, dec())."<br>";
 
         
-        //======================================================================
-        //x jawaban_a sanguin
-	$jumlah_jawaban_a_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_a", "Sanguin");
-	$x_jawaban_a_sanguin = $jumlah_jawaban_a_sanguin/$jumlah_sanguin;
-	//x jawaban_a  koleris
-	$jumlah_jawaban_a_koleris = get_jumlah_sum_atribut($db_object, "jawaban_a", "Koleris");
-	$x_jawaban_a_koleris = $jumlah_jawaban_a_koleris/$jumlah_koleris;
-        //x jawaban_a  melankolis
-	$jumlah_jawaban_a_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_a", "Melankolis");
-	$x_jawaban_a_melankolis = $jumlah_jawaban_a_melankolis/$jumlah_melankolis;
-        //x jawaban_a  plegmatis
-	$jumlah_jawaban_a_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_a", "Plegmatis");
-	$x_jawaban_a_plegmatis = $jumlah_jawaban_a_plegmatis/$jumlah_plegmatis;
-
-	echo "X Jawaban A Sanguin=".number_format($x_jawaban_a_sanguin, dec())."<br>";
-	echo "X Jawaban A Koleris=".number_format($x_jawaban_a_koleris, dec())."<br>";
-        echo "X Jawaban A Melankolis=".number_format($x_jawaban_a_melankolis, dec())."<br>";
-        echo "X Jawaban A Plegmatis=".number_format($x_jawaban_a_plegmatis, dec())."<br>";
-	echo "<br>";
-        
-	//S2 jawaban_a Sanguin
-	$s2_jawaban_a_sanguin = get_s2_populasi($db_object, 'jawaban_a', 'Sanguin', $x_jawaban_a_sanguin, $jumlah_sanguin);
-	//S2 jawaban_a Koleris
-	$s2_jawaban_a_koleris = get_s2_populasi($db_object, 'jawaban_a', 'Koleris', $x_jawaban_a_koleris, $jumlah_koleris);
-        //S2 jawaban_a Melankolis
-	$s2_jawaban_a_melankolis = get_s2_populasi($db_object, 'jawaban_a', 'Melankolis', $x_jawaban_a_melankolis, $jumlah_melankolis);
-        //S2 jawaban_a Koleris
-	$s2_jawaban_a_plegmatis = get_s2_populasi($db_object, 'jawaban_a', 'Plegmatis', $x_jawaban_a_plegmatis, $jumlah_plegmatis);
-        
-	echo "S2 Jawaban A Sanguin=".number_format($s2_jawaban_a_sanguin, dec())."<br>";
-	echo "S2 Jawaban A Koleris=".number_format($s2_jawaban_a_koleris, dec())."<br>";
-        echo "S2 Jawaban A Melankolis=".number_format($s2_jawaban_a_melankolis, dec())."<br>";
-        echo "S2 Jawaban A Plegmatis=".number_format($s2_jawaban_a_plegmatis, dec())."<br>";
-
-	echo "<br>";
-	//S jawaban_a Sanguin
-	$s_jawaban_a_sanguin = sqrt($s2_jawaban_a_sanguin);
-	//S jawaban_a Koleris
-	$s_jawaban_a_koleris = sqrt($s2_jawaban_a_koleris);
-        //S jawaban_a Melankolis
-	$s_jawaban_a_melankolis = sqrt($s2_jawaban_a_melankolis);
-        //S jawaban_a Plegmatis
-	$s_jawaban_a_plegmatis = sqrt($s2_jawaban_a_plegmatis);
-        
-	echo "S Jawaban A Sanguin=".number_format($s_jawaban_a_sanguin, dec())."<br>";
-	echo "S Jawaban A Koleris=".number_format($s_jawaban_a_koleris, dec())."<br>";
-        echo "S Jawaban A Melankolis=".number_format($s_jawaban_a_melankolis, dec())."<br>";
-        echo "S Jawaban A Plegmatis=".number_format($s_jawaban_a_plegmatis, dec())."<br>";
-
+        //#jawaban_a
         //sanguin
 	$depan_jawaban_a_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_a_sanguin);
 	$belakang_jawaban_a_sanguin = exp( ((pow($jawaban_a-$x_jawaban_a_sanguin,2)) / (2*$s2_jawaban_a_sanguin)) * -1);
@@ -281,7 +416,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$depan_jawaban_a_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_a_plegmatis);
 	$belakang_jawaban_a_plegmatis = exp( ((pow($jawaban_a-$x_jawaban_a_plegmatis,2)) / (2*$s2_jawaban_a_plegmatis)) * -1);
 	$prob_jawaban_a_plegmatis = $depan_jawaban_a_plegmatis * $belakang_jawaban_a_plegmatis;
-
+        //display
 	echo "<br>";
 	echo "P(jawaban_a|Sanguin)=".number_format($prob_jawaban_a_sanguin, dec())."<br>";
 	echo "P(jawaban_a|Koleris)=".number_format($prob_jawaban_a_koleris, dec())."<br>";
@@ -289,54 +424,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         echo "P(jawaban_a|Plegmatis)=".number_format($prob_jawaban_a_plegmatis, dec())."<br>";
         
         //======================================================================
-        //x jawaban_b sanguin
-	$jumlah_jawaban_b_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_b", "Sanguin");
-	$x_jawaban_b_sanguin = $jumlah_jawaban_b_sanguin/$jumlah_sanguin;
-	//x jawaban_b  koleris
-	$jumlah_jawaban_b_koleris = get_jumlah_sum_atribut($db_object, "jawaban_b", "Koleris");
-	$x_jawaban_b_koleris = $jumlah_jawaban_b_koleris/$jumlah_koleris;
-        //x jawaban_b  melankolis
-	$jumlah_jawaban_b_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_b", "Melankolis");
-	$x_jawaban_b_melankolis = $jumlah_jawaban_b_melankolis/$jumlah_melankolis;
-        //x jawaban_b  plegmatis
-	$jumlah_jawaban_b_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_b", "Plegmatis");
-	$x_jawaban_b_plegmatis = $jumlah_jawaban_b_plegmatis/$jumlah_plegmatis;
-
-	echo "X Jawaban B Sanguin=".number_format($x_jawaban_b_sanguin, dec())."<br>";
-	echo "X Jawaban B Koleris=".number_format($x_jawaban_b_koleris, dec())."<br>";
-        echo "X Jawaban B Melankolis=".number_format($x_jawaban_b_melankolis, dec())."<br>";
-        echo "X Jawaban B Plegmatis=".number_format($x_jawaban_b_plegmatis, dec())."<br>";
-	echo "<br>";
-        
-	//S2 jawaban_b Sanguin
-	$s2_jawaban_b_sanguin = get_s2_populasi($db_object, 'jawaban_b', 'Sanguin', $x_jawaban_b_sanguin, $jumlah_sanguin);
-	//S2 jawaban_b Koleris
-	$s2_jawaban_b_koleris = get_s2_populasi($db_object, 'jawaban_b', 'Koleris', $x_jawaban_b_koleris, $jumlah_koleris);
-        //S2 jawaban_b Melankolis
-	$s2_jawaban_b_melankolis = get_s2_populasi($db_object, 'jawaban_b', 'Melankolis', $x_jawaban_b_melankolis, $jumlah_melankolis);
-        //S2 jawaban_b Koleris
-	$s2_jawaban_b_plegmatis = get_s2_populasi($db_object, 'jawaban_b', 'Plegmatis', $x_jawaban_b_plegmatis, $jumlah_plegmatis);
-        
-	echo "S2 Jawaban B Sanguin=".number_format($s2_jawaban_b_sanguin, dec())."<br>";
-	echo "S2 Jawaban B Koleris=".number_format($s2_jawaban_b_koleris, dec())."<br>";
-        echo "S2 Jawaban B Melankolis=".number_format($s2_jawaban_b_melankolis, dec())."<br>";
-        echo "S2 Jawaban B Plegmatis=".number_format($s2_jawaban_b_plegmatis, dec())."<br>";
-
-	echo "<br>";
-	//S jawaban_b Sanguin
-	$s_jawaban_b_sanguin = sqrt($s2_jawaban_b_sanguin);
-	//S jawaban_b Koleris
-	$s_jawaban_b_koleris = sqrt($s2_jawaban_b_koleris);
-        //S jawaban_b Melankolis
-	$s_jawaban_b_melankolis = sqrt($s2_jawaban_b_melankolis);
-        //S jawaban_b Plegmatis
-	$s_jawaban_b_plegmatis = sqrt($s2_jawaban_b_plegmatis);
-        
-	echo "S Jawaban B Sanguin=".number_format($s_jawaban_b_sanguin, dec())."<br>";
-	echo "S Jawaban B Koleris=".number_format($s_jawaban_b_koleris, dec())."<br>";
-        echo "S Jawaban B Melankolis=".number_format($s_jawaban_b_melankolis, dec())."<br>";
-        echo "S Jawaban B Plegmatis=".number_format($s_jawaban_b_plegmatis, dec())."<br>";
-
+        //#jawaban_b
         //sanguin
 	$depan_jawaban_b_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_b_sanguin);
 	$belakang_jawaban_b_sanguin = exp( ((pow($jawaban_b-$x_jawaban_b_sanguin,2)) / (2*$s2_jawaban_b_sanguin)) * -1);
@@ -353,7 +441,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$depan_jawaban_b_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_b_plegmatis);
 	$belakang_jawaban_b_plegmatis = exp( ((pow($jawaban_b-$x_jawaban_b_plegmatis,2)) / (2*$s2_jawaban_b_plegmatis)) * -1);
 	$prob_jawaban_b_plegmatis = $depan_jawaban_b_plegmatis * $belakang_jawaban_b_plegmatis;
-
+        //display
 	echo "<br>";
 	echo "P(jawaban_b|Sanguin)=".number_format($prob_jawaban_b_sanguin, dec())."<br>";
 	echo "P(jawaban_b|Koleris)=".number_format($prob_jawaban_b_koleris, dec())."<br>";
@@ -361,54 +449,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         echo "P(jawaban_b|Plegmatis)=".number_format($prob_jawaban_b_plegmatis, dec())."<br>";
         
         //======================================================================
-        //x jawaban_c sanguin
-	$jumlah_jawaban_c_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_c", "Sanguin");
-	$x_jawaban_c_sanguin = $jumlah_jawaban_c_sanguin/$jumlah_sanguin;
-	//x jawaban_c  koleris
-	$jumlah_jawaban_c_koleris = get_jumlah_sum_atribut($db_object, "jawaban_c", "Koleris");
-	$x_jawaban_c_koleris = $jumlah_jawaban_c_koleris/$jumlah_koleris;
-        //x jawaban_c  melankolis
-	$jumlah_jawaban_c_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_c", "Melankolis");
-	$x_jawaban_c_melankolis = $jumlah_jawaban_c_melankolis/$jumlah_melankolis;
-        //x jawaban_c  plegmatis
-	$jumlah_jawaban_c_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_c", "Plegmatis");
-	$x_jawaban_c_plegmatis = $jumlah_jawaban_c_plegmatis/$jumlah_plegmatis;
-
-	echo "X Jawaban C Sanguin=".number_format($x_jawaban_c_sanguin, dec())."<br>";
-	echo "X Jawaban C Koleris=".number_format($x_jawaban_c_koleris, dec())."<br>";
-        echo "X Jawaban C Melankolis=".number_format($x_jawaban_c_melankolis, dec())."<br>";
-        echo "X Jawaban C Plegmatis=".number_format($x_jawaban_c_plegmatis, dec())."<br>";
-	echo "<br>";
-        
-	//S2 jawaban_c Sanguin
-	$s2_jawaban_c_sanguin = get_s2_populasi($db_object, 'jawaban_c', 'Sanguin', $x_jawaban_c_sanguin, $jumlah_sanguin);
-	//S2 jawaban_c Koleris
-	$s2_jawaban_c_koleris = get_s2_populasi($db_object, 'jawaban_c', 'Koleris', $x_jawaban_c_koleris, $jumlah_koleris);
-        //S2 jawaban_c Melankolis
-	$s2_jawaban_c_melankolis = get_s2_populasi($db_object, 'jawaban_c', 'Melankolis', $x_jawaban_c_melankolis, $jumlah_melankolis);
-        //S2 jawaban_c Koleris
-	$s2_jawaban_c_plegmatis = get_s2_populasi($db_object, 'jawaban_c', 'Plegmatis', $x_jawaban_c_plegmatis, $jumlah_plegmatis);
-        
-	echo "S2 Jawaban C Sanguin=".number_format($s2_jawaban_c_sanguin, dec())."<br>";
-	echo "S2 Jawaban C Koleris=".number_format($s2_jawaban_c_koleris, dec())."<br>";
-        echo "S2 Jawaban C Melankolis=".number_format($s2_jawaban_c_melankolis, dec())."<br>";
-        echo "S2 Jawaban C Plegmatis=".number_format($s2_jawaban_c_plegmatis, dec())."<br>";
-
-	echo "<br>";
-	//S jawaban_c Sanguin
-	$s_jawaban_c_sanguin = sqrt($s2_jawaban_c_sanguin);
-	//S jawaban_c Koleris
-	$s_jawaban_c_koleris = sqrt($s2_jawaban_c_koleris);
-        //S jawaban_c Melankolis
-	$s_jawaban_c_melankolis = sqrt($s2_jawaban_c_melankolis);
-        //S jawaban_c Plegmatis
-	$s_jawaban_c_plegmatis = sqrt($s2_jawaban_c_plegmatis);
-        
-	echo "S Jawaban C Sanguin=".number_format($s_jawaban_c_sanguin, dec())."<br>";
-	echo "S Jawaban C Koleris=".number_format($s_jawaban_c_koleris, dec())."<br>";
-        echo "S Jawaban C Melankolis=".number_format($s_jawaban_c_melankolis, dec())."<br>";
-        echo "S Jawaban C Plegmatis=".number_format($s_jawaban_c_plegmatis, dec())."<br>";
-
+        //#jawaban_c
         //sanguin
 	$depan_jawaban_c_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_c_sanguin);
 	$belakang_jawaban_c_sanguin = exp( ((pow($jawaban_c-$x_jawaban_c_sanguin,2)) / (2*$s2_jawaban_c_sanguin)) * -1);
@@ -425,7 +466,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$depan_jawaban_c_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_c_plegmatis);
 	$belakang_jawaban_c_plegmatis = exp( ((pow($jawaban_c-$x_jawaban_c_plegmatis,2)) / (2*$s2_jawaban_c_plegmatis)) * -1);
 	$prob_jawaban_c_plegmatis = $depan_jawaban_c_plegmatis * $belakang_jawaban_c_plegmatis;
-
+        //display
 	echo "<br>";
 	echo "P(jawaban_c|Sanguin)=".number_format($prob_jawaban_c_sanguin, dec())."<br>";
 	echo "P(jawaban_c|Koleris)=".number_format($prob_jawaban_c_koleris, dec())."<br>";
@@ -433,54 +474,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
         echo "P(jawaban_c|Plegmatis)=".number_format($prob_jawaban_c_plegmatis, dec())."<br>";
         
         //======================================================================
-        //x jawaban_d sanguin
-	$jumlah_jawaban_d_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_d", "Sanguin");
-	$x_jawaban_d_sanguin = $jumlah_jawaban_d_sanguin/$jumlah_sanguin;
-	//x jawaban_d  koleris
-	$jumlah_jawaban_d_koleris = get_jumlah_sum_atribut($db_object, "jawaban_d", "Koleris");
-	$x_jawaban_d_koleris = $jumlah_jawaban_d_koleris/$jumlah_koleris;
-        //x jawaban_d  melankolis
-	$jumlah_jawaban_d_melankolis = get_jumlah_sum_atribut($db_object, "jawaban_d", "Melankolis");
-	$x_jawaban_d_melankolis = $jumlah_jawaban_d_melankolis/$jumlah_melankolis;
-        //x jawaban_d  plegmatis
-	$jumlah_jawaban_d_plegmatis = get_jumlah_sum_atribut($db_object, "jawaban_d", "Plegmatis");
-	$x_jawaban_d_plegmatis = $jumlah_jawaban_d_plegmatis/$jumlah_plegmatis;
-
-	echo "X Jawaban D Sanguin=".number_format($x_jawaban_d_sanguin, dec())."<br>";
-	echo "X Jawaban D Koleris=".number_format($x_jawaban_d_koleris, dec())."<br>";
-        echo "X Jawaban D Melankolis=".number_format($x_jawaban_d_melankolis, dec())."<br>";
-        echo "X Jawaban D Plegmatis=".number_format($x_jawaban_d_plegmatis, dec())."<br>";
-	echo "<br>";
-        
-	//S2 jawaban_d Sanguin
-	$s2_jawaban_d_sanguin = get_s2_populasi($db_object, 'jawaban_d', 'Sanguin', $x_jawaban_d_sanguin, $jumlah_sanguin);
-	//S2 jawaban_d Koleris
-	$s2_jawaban_d_koleris = get_s2_populasi($db_object, 'jawaban_d', 'Koleris', $x_jawaban_d_koleris, $jumlah_koleris);
-        //S2 jawaban_d Melankolis
-	$s2_jawaban_d_melankolis = get_s2_populasi($db_object, 'jawaban_d', 'Melankolis', $x_jawaban_d_melankolis, $jumlah_melankolis);
-        //S2 jawaban_d Koleris
-	$s2_jawaban_d_plegmatis = get_s2_populasi($db_object, 'jawaban_d', 'Plegmatis', $x_jawaban_d_plegmatis, $jumlah_plegmatis);
-        
-	echo "S2 Jawaban D Sanguin=".number_format($s2_jawaban_d_sanguin, dec())."<br>";
-	echo "S2 Jawaban D Koleris=".number_format($s2_jawaban_d_koleris, dec())."<br>";
-        echo "S2 Jawaban D Melankolis=".number_format($s2_jawaban_d_melankolis, dec())."<br>";
-        echo "S2 Jawaban D Plegmatis=".number_format($s2_jawaban_d_plegmatis, dec())."<br>";
-
-	echo "<br>";
-	//S jawaban_d Sanguin
-	$s_jawaban_d_sanguin = sqrt($s2_jawaban_d_sanguin);
-	//S jawaban_d Koleris
-	$s_jawaban_d_koleris = sqrt($s2_jawaban_d_koleris);
-        //S jawaban_d Melankolis
-	$s_jawaban_d_melankolis = sqrt($s2_jawaban_d_melankolis);
-        //S jawaban_d Plegmatis
-	$s_jawaban_d_plegmatis = sqrt($s2_jawaban_d_plegmatis);
-        
-	echo "S Jawaban D Sanguin=".number_format($s_jawaban_d_sanguin, dec())."<br>";
-	echo "S Jawaban D Koleris=".number_format($s_jawaban_d_koleris, dec())."<br>";
-        echo "S Jawaban D Melankolis=".number_format($s_jawaban_d_melankolis, dec())."<br>";
-        echo "S Jawaban D Plegmatis=".number_format($s_jawaban_d_plegmatis, dec())."<br>";
-
+        //#jawaban_d
         //sanguin
 	$depan_jawaban_d_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_d_sanguin);
 	$belakang_jawaban_d_sanguin = exp( ((pow($jawaban_d-$x_jawaban_d_sanguin,2)) / (2*$s2_jawaban_d_sanguin)) * -1);
@@ -497,7 +491,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 	$depan_jawaban_d_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_d_plegmatis);
 	$belakang_jawaban_d_plegmatis = exp( ((pow($jawaban_d-$x_jawaban_d_plegmatis,2)) / (2*$s2_jawaban_d_plegmatis)) * -1);
 	$prob_jawaban_d_plegmatis = $depan_jawaban_d_plegmatis * $belakang_jawaban_d_plegmatis;
-
+        //display
 	echo "<br>";
 	echo "P(jawaban_d|Sanguin)=".number_format($prob_jawaban_d_sanguin, dec())."<br>";
 	echo "P(jawaban_d|Koleris)=".number_format($prob_jawaban_d_koleris, dec())."<br>";
