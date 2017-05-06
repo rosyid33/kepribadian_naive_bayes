@@ -161,6 +161,15 @@ include_once "import/excel_reader2.php";
                     while($row = $db_object->db_fetch_array($res)){
                         echo "<center>";
                         echo "<b>Data Uji ke-".$aa."</b>";
+                        echo "<br>"
+                        . "<strong>"."Jenis kelamin: "."</strong>".$row['jenis_kelamin']." - "
+                                . "<strong>"."Usia: "."</strong>".$row['usia']." - "
+                                . "<strong>"."Sekolah: "."</strong>".$row['sekolah']." - "
+                                . "<strong>"."Jawaban A: "."</strong>".$row['jawaban_a']." - "
+                                . "<strong>"."Jawaban B: "."</strong>".$row['jawaban_b']." - "
+                                . "<strong>"."Jawaban C: "."</strong>".$row['jawaban_c']." - "
+                                . "<strong>"."Jawaban D: "."</strong>".$row['jawaban_d']
+                                ;
                         ProsesNaiveBayes($db_object, $row['id'], $row['jenis_kelamin'], $row['usia'], $row['sekolah'], 
                                 $row['jawaban_a'], $row['jawaban_b'], $row['jawaban_c'], $row['jawaban_d']);
                         $aa++;
