@@ -6,6 +6,7 @@ if (!isset($_SESSION['kepribadian_naive_bayes_id'])) {
 
 include_once "database.php";
 include_once "fungsi.php";
+include_once "fungsi_proses.php";
 include_once "import/excel_reader2.php";
 ?>
 <div class="content-wrapper">
@@ -69,7 +70,7 @@ include_once "import/excel_reader2.php";
             <script> location.replace("?menu=uji_akurasi&pesan_success=Data uji berhasil dihapus");</script>
             <?php
         }
-
+        
         $sql = "SELECT * FROM data_uji";
         $query = $db_object->db_query($sql);
         $jumlah = $db_object->db_num_rows($query);
@@ -92,6 +93,12 @@ include_once "import/excel_reader2.php";
                             <i class="fa fa-trash-o"></i> Delete All Data Uji
                         </button>
                     </div>
+                    
+                    <div class="form-group">
+                        <button name="uji_akurasi" type="submit"  class="btn btn-default" onclick="">
+                            <i class="fa fa-check"></i> Uji Akurasi
+                        </button>
+                    </div>
                 </form>
 
                 <?php
@@ -109,7 +116,7 @@ include_once "import/excel_reader2.php";
                 } 
                 else {
                     ?>
-                <strong>DATA UJI:</strong>
+                    <strong>DATA UJI:</strong>
                     <table class='table table-bordered table-striped  table-hover'>
                         <tr>
                             <th>No</th>
@@ -143,6 +150,23 @@ include_once "import/excel_reader2.php";
                         ?>
                     </table>
                     <?php
+                }
+                
+                if(isset($_POST['uji_akurasi'])){
+                    //proses menghitung naive bayes
+                    //loop data uji nya
+                    $sql_hit = "SELECT * FROM data_uji ";
+                    $res = $db_object->db_query($sql_hit);
+                    $aa=1;
+                    while($row = $db_object->db_fetch_array($res)){
+                        echo "<center>";
+                        echo "<b>Data Uji ke-".$aa."</b>";
+                        ProsesNaiveBayes($db_object, $row['id'], $row['jenis_kelamin'], $row['usia'], $row['sekolah'], 
+                                $row['jawaban_a'], $row['jawaban_b'], $row['jawaban_c'], $row['jawaban_d']);
+                        $aa++;
+                        echo "<br><br>";
+                        echo "</center>";
+                    }
                 }
                 ?>
             </div>
