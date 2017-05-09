@@ -578,15 +578,22 @@ function ProsesNaiveBayes($db_object, $id_data_uji, $jenis_kelamin, $usia, $seko
 
 //    $nilai_sanguin = number_format($nilai_sanguin, 50);
 //    $nilai_koleris = number_format($nilai_koleris, 50);
-//    update_hasil_prediksi($id_data_uji, $hasil_prediksi, $nilai_sanguin, $nilai_koleris);
-//    
+    $res_hasil = update_hasil_prediksi($db_object, $id_data_uji, $hasil_prediksi, 
+            $nilai_sanguin, $nilai_koleris, $nilai_melankolis, $nilai_plegmatis);
+    
+      
 }
 	
-function update_hasil_prediksi($id, $hasil, $sanguin, $koleris){
-	$sql = "UPDATE tabel_data_uji SET kelas_asli_hasil='$hasil', nilai_sanguin='$sanguin', nilai_koleris='$koleris' 
-				WHERE id_kategori='$id'";
-				
-	mysql_query($sql);
+function update_hasil_prediksi($db_object, $id, $hasil, $sanguin, $koleris, $melankolis, $plegmatis){
+	$sql = "UPDATE data_uji "
+                . "SET "
+                . "kelas_hasil='$hasil', "
+                . "nilai_sanguin='$sanguin', "
+                . "nilai_koleris='$koleris', "
+                . "nilai_melankolis='$melankolis', "
+                . "nilai_plegmatis='$plegmatis' 
+                WHERE id=$id";
+	return $db_object->db_query($sql);
 }
 
 

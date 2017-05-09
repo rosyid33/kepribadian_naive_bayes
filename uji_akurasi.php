@@ -173,9 +173,179 @@ include_once "import/excel_reader2.php";
                         ProsesNaiveBayes($db_object, $row['id'], $row['jenis_kelamin'], $row['usia'], $row['sekolah'], 
                                 $row['jawaban_a'], $row['jawaban_b'], $row['jawaban_c'], $row['jawaban_d']);
                         $aa++;
-                        echo "<br><br>";
-                        echo "</center>";
+                        //echo "<br><br>";
                     }
+                    
+                    //perhitungan akurasi
+                    $que = $db_object->db_query("SELECT * FROM data_uji");
+                    $jumlah_uji=$db_object->db_num_rows($que);
+                    //$TP=0; $FN=0; $TN=0; $FP=0; $kosong=0;
+                    $TA = $FB = $FC = $FD = 
+                    $FE = $TF = $FG = $FH = 
+                    $FI = $FJ = $TK = $FL = 
+                    $FM = $FN = $FO = $TP = 0;
+                    ?>
+                    <strong>Hasil:</strong>
+                    <table class='table table-bordered table-striped  table-hover'>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Usia</th>
+                            <th>Sekolah</th>
+                            <th>Jawaban A</th>
+                            <th>Jawaban B</th>
+                            <th>Jawaban C</th>
+                            <th>Jawaban D</th>
+                            <th>Kelas Asli</th>
+                            <th>Kelas Hasil</th>
+                            <th></th>
+                        </tr>
+                    <?php
+                    $no = 0;
+                    while($row=$db_object->db_fetch_array($que)){
+                            $asli=$row['kelas_asli'];
+                            $prediksi=$row['kelas_hasil'];
+                            if($row['kelas_asli']==$row['kelas_hasil']){
+				$ketepatan="Benar";
+                            }else{
+                                $ketepatan="Salah";
+                            }
+                            
+                            echo "<tr>";
+                            echo "<td>" . $no . "</td>";
+                            echo "<td>" . $row['nama'] . "</td>";
+                            echo "<td>" . $row['jenis_kelamin'] . "</td>";
+                            echo "<td>" . $row['usia'] . "</td>";
+                            echo "<td>" . $row['sekolah'] . "</td>";
+                            echo "<td>" . $row['jawaban_a'] . "</td>";
+                            echo "<td>" . $row['jawaban_b'] . "</td>";
+                            echo "<td>" . $row['jawaban_c'] . "</td>";
+                            echo "<td>" . $row['jawaban_d'] . "</td>";
+                            echo "<td>" . $row['kelas_asli'] . "</td>";
+                            echo "<td>" . $row['kelas_hasil'] . "</td>";
+                            echo "<td>" . $ketepatan . "</td>";
+                            echo "</tr>";
+                            $no++;
+                            
+                            if($asli=='Sanguin' & $prediksi=='Sanguin'){
+                                    $TA++;
+                            }
+                            else if($asli=='Sanguin' & $prediksi=='Koleris'){
+                                    $FB++;
+                            }
+                            else if($asli=='Sanguin' & $prediksi=='Melankolis'){
+                                    $FC++;
+                            }
+                            else if($asli=='Sanguin' & $prediksi=='Plegmatis'){
+                                    $FD++;
+                            }
+                            else if($asli=='Koleris' & $prediksi=='Sanguin'){
+                                    $FE++;
+                            }
+                            else if($asli=='Koleris' & $prediksi=='Koleris'){
+                                    $TF++;
+                            }
+                            else if($asli=='Koleris' & $prediksi=='Melankolis'){
+                                    $FG++;
+                            }
+                            else if($asli=='Koleris' & $prediksi=='Plegmatis'){
+                                    $FH++;
+                            }
+                            else if($asli=='Melankolis' & $prediksi=='Sanguin'){
+                                    $FI++;
+                            }
+                            else if($asli=='Melankolis' & $prediksi=='Koleris'){
+                                    $FJ++;
+                            }
+                            else if($asli=='Melankolis' & $prediksi=='Melankolis'){
+                                    $TK++;
+                            }
+                            else if($asli=='Melankolis' & $prediksi=='Plegmatis'){
+                                    $FL++;
+                            }
+                            else if($asli=='Plegmatis' & $prediksi=='Sanguin'){
+                                    $FM++;
+                            }
+                            else if($asli=='Plegmatis' & $prediksi=='Koleris'){
+                                    $FN++;
+                            }
+                            else if($asli=='Plegmatis' & $prediksi=='Melankolis'){
+                                    $FO++;
+                            }
+                            else if($asli=='Plegmatis' & $prediksi=='Plegmatis'){
+                                    $TP++;
+                            }
+                            else if($prediksi==''){
+                                    $kosong++;
+                            }
+                    }
+                    ?>
+                    </table>
+                    <?php
+                    $tepat=($TA+$TF+$TK+$TP);
+                    $tidak_tepat=($FB+$FC+$FD+$FE+$FG+$FH+$FI+$FJ+$FL+$FM+$FN+$FO+$kosong);
+                    $akurasi=($tepat/$jumlah_uji)*100;
+                    $laju_error=($tidak_tepat/$jumlah_uji)*100;
+//                        $sensitivitas=($TP/($TP+$FN))*100;
+//                        $spesifisitas=($TN/($FP+$TN))*100;
+
+                    $akurasi = round($akurasi,2);	
+                    $laju_error = round($laju_error,2);
+                    $sensitivitas = round($sensitivitas,2);	
+                    $spesifisitas = round($spesifisitas,2);	
+
+
+                    echo "<br><br>";
+                    echo "<center><h4>";
+                    echo "Jumlah prediksi: $jumlah_uji<br>";
+                    echo "Jumlah tepat: $tepat<br>";
+                    echo "Jumlah tidak tepat: $tidak_tepat<br>";
+                    if($kosong!=0){ echo "Jumlah data yang prediksinya kosong: $kosong<br></h4>"; }
+                    echo "<h2>AKURASI = $akurasi %<br>";
+                    echo "LAJU ERROR = $laju_error %<br></h2>";
+                    /*
+                    echo "<h4>TP: $TP | TN: $TN | FP: $FP | FN: $FN<br></h4>";
+                    echo "<table>";
+                        echo "<tr>";
+                            echo "<td>Sensitivitas</td> <td>=</td> <td>(TP / (TP + FN) ) x 100</td>";
+                        echo "</tr>";
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($TP / ($TP + $FN) ) x 100</td>";
+                        echo "</tr>";
+                        $TP_plus_FN = $TP+$FN;
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($TP / ($TP_plus_FN) ) x 100</td>";
+                        echo "</tr>";
+                        $last = $TP/($TP+$FN);
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($last) x 100</td>";
+                        echo "</tr>";
+                    echo "</table>";
+
+                    echo "<h2>SENSITIVITAS = $sensitivitas %<br></h2>";
+            //        $spesifisitas=($TN/($FP+$TN))*100;
+                    echo "<table>";
+                        echo "<tr>";
+                            echo "<td>Spesifisitas</td> <td>=</td> <td>(TN / (FP + TN) ) x 100</td>";
+                        echo "</tr>";
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($TN / ($FP + $TN) ) x 100</td>";
+                        echo "</tr>";
+                        $FP_plus_TN = $FP+$TN;
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($TN / ($FP_plus_TN) ) x 100</td>";
+                        echo "</tr>";
+                        $last1 = $TN/($FP+$TN);
+                        echo "<tr>";
+                            echo "<td>&nbsp;</td> <td>=</td> <td>($last1) x 100</td>";
+                        echo "</tr>";
+                    echo "</table>";
+                    echo "<h2>SPESIFISITAS = $spesifisitas %<br>";
+                    echo "</h2>";
+                    echo "</center>";
+                     * 
+                     */
                 }
                 ?>
             </div>
