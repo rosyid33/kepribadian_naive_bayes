@@ -30,7 +30,7 @@ include_once "fungsi.php";
         if (isset($_POST['submit'])) {
             $sql1 = "INSERT INTO users "
                     . " (nama, username, password, level)"
-                    . " VALUES (\"".$_POST['nama']."\", \"".$_POST['user_name']."\", md5(\"".$_POST['username']."\"), 2)";
+                    . " VALUES (\"".$_POST['nama']."\", \"".$_POST['user_name']."\", md5(\"".$_POST['user_name']."\"), 2)";
             $result1 = $db_object->db_query($sql1);
             $id_usernya = $db_object->db_insert_id();
             
