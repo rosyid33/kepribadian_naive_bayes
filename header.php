@@ -46,12 +46,11 @@ if(isset($_GET['menu'])){
                                         href="index.php?menu=data_latih">Data Latih</a></li>
                                 <li><a <?php echo ($menu=='uji_akurasi')?"class='menu-top-active'":""; ?> 
                                         href="index.php?menu=uji_akurasi">Uji Akurasi</a></li>
-                                <li><a <?php echo ($menu=='klasifikasi')?"class='menu-top-active'":""; ?> 
-                                        href="index.php?menu=klasifikasi">Klasifikasi</a></li>
+                                
                                 <li><a <?php echo ($menu=='laporan_hasil')?"class='menu-top-active'":""; ?> 
                                         href="index.php?menu=laporan_hasil">Laporan Hasil Klasifikasi</a></li>
                                 <li><a <?php echo ($menu=='data_user')?"class='menu-top-active'":""; ?> 
-                                        href="index.php?menu=data_user">Data User Siswa</a></li>
+                                        href="index.php?menu=data_siswa">Data User Siswa</a></li>
                                 <?php
                             }
                             ?>

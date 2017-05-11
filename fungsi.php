@@ -4,10 +4,34 @@ function can_access_menu($menu){
     if($_SESSION['kepribadian_naive_bayes_level']==2 & ($menu=='klasifikasi')){// || $menu=='view_rule')){
         return true;
     }
-    if($_SESSION['kepribadian_naive_bayes_level']==1){
+    if($_SESSION['kepribadian_naive_bayes_level']==1 & (($menu=='data_latih')
+             || ($menu=='uji_akurasi') || ($menu=='laporan_hasil') || ($menu=='data_siswa'))){
         return true;
     }
     return false;
+}
+
+function get_data_siswa($db_object, $id_siswa){
+    $sql = "SELECT * FROM data_siswa "
+            . " WHERE id=".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row;
+}
+
+function sudah_klasifikasi($db_object, $id_siswa){
+    $sql = "SELECT COUNT(*) FROM jawaban_kuisioner "
+            . " WHERE id_siswa = ".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row[0]>0;
+}
+
+function get_hasil_klasifikasi($db_object, $id_siswa){
+    $sql = "SELECT * FROM data_hasil_klasifikasi WHERE id_siswa = ".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row;
 }
 //START USERS===================================================================
 /**

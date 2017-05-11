@@ -22,6 +22,7 @@ if ($num_rows > 0) {
         $_SESSION['kepribadian_naive_bayes_nama'] = $rows['nama'];
         $_SESSION['kepribadian_naive_bayes_username'] = $rows['username'];
         $_SESSION['kepribadian_naive_bayes_level'] = $rows['level'];
+        $_SESSION['kepribadian_naive_bayes_id_siswa'] = get_id_siswa_by_id_user($db, $rows['id_user']);
 
         $level_name = ($_SESSION['kepribadian_naive_bayes_level']==1)?"guru":"siswa";
         $_SESSION['kepribadian_naive_bayes_level_name'] = $level_name;
@@ -32,6 +33,13 @@ if ($num_rows > 0) {
      header("location:login.php?login=1");
 }
 
+
+function get_id_siswa_by_id_user($db, $id_user){
+    $sql = "SELECT id FROM data_siswa WHERE id_user = ".$id_user;
+    $result = $db->db_query($sql);
+    $row = $db->db_fetch_array($result);
+    return (!empty($row['id'])?$row['id']:0);
+}
 
 /**
  * query get login 

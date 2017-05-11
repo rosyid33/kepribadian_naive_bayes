@@ -202,7 +202,7 @@ include_once "import/excel_reader2.php";
                             <th></th>
                         </tr>
                     <?php
-                    $no = 0;
+                    $no = 1;
                     while($row=$db_object->db_fetch_array($que)){
                             $asli=$row['kelas_asli'];
                             $prediksi=$row['kelas_hasil'];

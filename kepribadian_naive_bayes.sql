@@ -12,17 +12,13 @@ MySQL - 10.1.16-MariaDB : Database - kepribadian_naive_bayes
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`kepribadian_naive_bayes` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `kepribadian_naive_bayes`;
-
 /*Table structure for table `data_hasil_klasifikasi` */
 
 DROP TABLE IF EXISTS `data_hasil_klasifikasi`;
 
 CREATE TABLE `data_hasil_klasifikasi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(200) DEFAULT NULL,
+  `id_siswa` int(11) NOT NULL DEFAULT '0',
   `jenis_kelamin` enum('L','P') DEFAULT NULL,
   `usia` int(11) DEFAULT NULL,
   `sekolah` varchar(100) DEFAULT NULL,
@@ -36,16 +32,12 @@ CREATE TABLE `data_hasil_klasifikasi` (
   `nilai_melankolis` double DEFAULT NULL,
   `nilai_plegmatis` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `data_hasil_klasifikasi` */
 
-insert  into `data_hasil_klasifikasi`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_hasil`,`nilai_sanguin`,`nilai_koleris`,`nilai_melankolis`,`nilai_plegmatis`) values 
-(1,'Aisyah Regina P','P',15,'Swasta',8,10,9,13,NULL,NULL,NULL,NULL,NULL),
-(2,'Emilia Nur Rohmah','P',13,'Negeri',10,4,14,12,NULL,NULL,NULL,NULL,NULL),
-(3,'Faris Saifullah','L',14,'Swasta',15,8,10,7,NULL,NULL,NULL,NULL,NULL),
-(4,'Rahmi Dwiki D.R','L',14,'Negeri',11,12,8,9,NULL,NULL,NULL,NULL,NULL),
-(5,'Husna Dhiya \'ul Ilmi','P',13,'Swasta',20,8,8,4,NULL,NULL,NULL,NULL,NULL);
+insert  into `data_hasil_klasifikasi`(`id`,`id_siswa`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_hasil`,`nilai_sanguin`,`nilai_koleris`,`nilai_melankolis`,`nilai_plegmatis`) values 
+(1,1,'L',15,'Swasta',5,16,11,8,'Koleris',0.000000024963117963092,0.001938411237094,0.0000098277325228176,0.000000011191472403955);
 
 /*Table structure for table `data_latih` */
 
@@ -169,6 +161,82 @@ insert  into `data_latih`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_
 (99,'Novi Fidia Elizza','P',14,'Swasta',8,9,7,16,'Plegmatis'),
 (100,'Rosy Fatati qonita','P',15,'Swasta',9,4,10,17,'Plegmatis');
 
+/*Table structure for table `data_siswa` */
+
+DROP TABLE IF EXISTS `data_siswa`;
+
+CREATE TABLE `data_siswa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_siswa` varchar(200) DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') DEFAULT NULL,
+  `usia` int(11) DEFAULT NULL,
+  `sekolah` varchar(200) DEFAULT NULL,
+  `id_user` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `data_siswa` */
+
+insert  into `data_siswa`(`id`,`nama_siswa`,`jenis_kelamin`,`usia`,`sekolah`,`id_user`) values 
+(1,'Coba Siswa','L',15,'Swasta',2);
+
+/*Table structure for table `data_soal` */
+
+DROP TABLE IF EXISTS `data_soal`;
+
+CREATE TABLE `data_soal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pilihan_a` text,
+  `pilihan_b` text,
+  `pilihan_c` text,
+  `pilihan_d` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+
+/*Data for the table `data_soal` */
+
+insert  into `data_soal`(`id`,`pilihan_a`,`pilihan_b`,`pilihan_c`,`pilihan_d`) values 
+(1,'Penuh kehidupan, sering menggunakan isyarat tangan, lengan, dan wajah secara hidup.(Animated)','Orang yang mau melakukan sesuatu hal yang baru dan berani bertekad untuk me-nguasainya.(Adventurous)','Suka menyelidiki bagian - bagian yang logis. (Analitical)','Mudah menyesuaikan diri dan senang dalam setiap situasi. (Adaptable)'),
+(2,'Penuh kesenangan dan selera humor yang baik. (Playful)','Meyakinkan se-seorang dengan logika dan fakta, bukan dengan pesona / kekuasaan. (Persuasive)','Melakukan sesuatu sampai selesai sebelum memulai yang lain. (Persistent)','Tampak tidak ter-ganggu dan tenang serta menghindari setiap bentuk ke-kacauan. (Peaceful)'),
+(3,'Orang yang memandang bersama orang lain sebagai kesempatan untuk bersikap manis dan menghibur, bukannya sebagai tantangan / kesempatan bisnis. (Sociable)','Orang yang yakin dengan caranya sendiri. (Strong-Willed)','Bersedia mengorban-kan dirinya untuk memenuhi kebutuhan orang lain.','Dengan mudah menerima pandang-an / keinginan orang lain tanpa perlu banyak meng-ungkapkan pendapat sendiri. (Submissive)'),
+(4,'Bisa merebut hati orang lain melalui pesona kepribadian. (Convicing)','Mengubah setiap situasi, kejadian atau permainan sebagai sebuah kontes dan selalu bermain untuk menang. (Competitive)','Menghargai keperluan dan perasaan orang lain. (Considerate)','Mempunyai perasaan emosional tapi jarang memperlihatkannya. (Controlled)'),
+(5,'Memperbaharui dan membantu membuat orang lain merasa senang. (Refreshing)','Bisa bertindak cepat dan efektif dalam semua situasi. (Resourceful)','Memperlakukan orang lain dengan segan sebagai penghormatan dan penghargaan. (Respectfull)','Menahan diri dalam menunjukkan emosi atau antusiasme. (Reserved)'),
+(6,'Penuh gairah dalam kehidupan. (Spirited)','Orang mandiri yang bisa sepenuhnya mengandal-kan kemampuan dan sumber dayanya sendiri. (Self-Reliant)','Secara intensif memperhatikan orang lain maupun hal apapun yang terjadi di sekitar. (Sensitive)','Orang yang mudah menerima keadaan atau situasi apa saja. (Satisfied)'),
+(7,'Dapat mendorong atau memaksa orang lain mengikuti dan bergabung melalui pesona kepribadian-nya. (Promoter)','Mengetahui segalanya akan beres bila kita yang memimpin. (Positive)','Memilih mempersiap-kan aturan yang terinci sebelumnya dalam menyelesaikan suatu proyek dan lebih menyukai keterlibatan dalam tahap-tahap perencanaan dan produk jadi, bukan dalam melaksanakan tugas. (Planner)','Tidak terpengaruh oleh penundaan. Tetap tenang dan toleran. (Patient)'),
+(8,'Memilih agar semua kehidupan adalah kegiatan yang impulsif, tidak dipikirkan terlebih dahulu dan tidak terhambat oleh rencana.(Spontaneous)','Yakin, tidak ragu-ragu. (Sure)','Membuat dan meng-hayati hidup menurut rencana sehari-hari. Tidak menyukai bila rencananya terganggu.(Scheduled)','Pendiam, tidak mudah terseret dalam per-cakapan. (Shy)'),
+(9,'Orang yang riang dan dapat meyakinkan diri sendiri & orang lain bahwa semuanya akan beres. (Optimistic)','Bicara terang-terangan dan terkadang tidak menahan diri. (Outspoken)','Orang yang mengatur segala-galanya secara sistematis dan metodis. (Orderly)','menerima apa saja, cepat melakukan sesuatu bahkan dengan cara orang lain.  (Obliging)'),
+(10,'Punya rasa humor yang cemerlang dan bisa membuat cerita apa saja menjadi peristiwa yang menyenangkan. (Funny)','Pribadi yang mendominasi dan mampu menyebabkan orang lain ragu - ragu untuk melawannya. (Forceful)','Secara konsisten dapat diandalkan, teguh, setia, dan mengabdi, bahkan terkadang tanpa alasan. (Faithful)','Orang yang menang-gapi. Bukan orang yang punya inisiatif untuk memulai per-cakapan. (Friendly)'),
+(11,'Orang yang me-nyenangkan sebagai teman. (Delightful)','Bersedia mengambil resiko tanpa kenal takut. (Daring)','Melakukan segala sesuatu secara ber-urutan dengan ingatan yang jernih akan segala hal yang terjadi. (Detailed)','Berurusan dengan orang lain secara penuh siasat, perasa, dan sabar. (Diplomatic)'),
+(12,'Secara konsisten memiliki semangat yang tinggi dan suka membagkan ke-bahagiaan kepada orang lain. (Cheerful)','Percaya diri dan yakin akan kemampuan dan kesuksesannya sendiri. (Confifent)','Orang yang perhatiannya melibat-kan sesuatu yang berhubungan dengan intelektual dan artistik. (Cultured)','Tetap memiliki ke-seimbangan secara emosional, me-nanggapi sebagaimana yang diharapkan orang lain. (Consisten)'),
+(13,'Mendorong orang lain untuk bekerja dan ter-libat serta membuat seluruhnya menyenangkan. (Inspiring)','Memenuhi diri sendiri, mandiri, penuh percaya diri dan nampak tidak begitu memerlukan bantuan. (Independent)','Memvisualisasikan hal-hal dalam bentuk yang sempurna dan perlu memenuhi standar itu sendiri. (Idealistic)','Tidak pernah me-ngatakan atau me-nyebabkan apapun yang tidak me-nyenangkan atau menimbulkan rasa keberatan. (Inoffensive)'),
+(14,'Terang-terangan me-nyatakan emosi terutama rasa sayang dan tidak ragu menyentuh ketika berbicara dengan orang lain. (Demonstrative)','Orang yang mempunyai kemampuan membuat penilaian yang cepat dan tuntas. (Decisive)','Intensif dan introspektif tanpa rasa senang pada percakapan dan pengajaran yang pulasan. (Deep)','Memperlihatkan ke-pandaian bicara yang mengigit\'. Biasanya kalimat satu baris yang sifatnya sarkastik. (Dryhumor)'),
+(15,'Menyukai pesta dan tidak bisa menunggu untuk bertemu setiap orang dalam ruangan, tidak pernah meng-anggap orang lain asing. (Mixes-easily)','Terdorong oleh keperluan untuk produktif, pemimpin yang dituruti orang lain. (Mover)','Punya apresiasi mendalam untuk musik, punya komitmen kepada musik sebagai bentuk seni, bukan hanya kesenangan pertunjukan. (Musical)','Secara konsisten mencari peranan merukunkan pertikaian supaya bisa meng-hindari konflik. (Mediator)'),
+(16,'Terus-menerus ber-bicara, biasanya men-ceritakan kisah lucu yang dapat menghibur setiap orang di sekitar-nya, merasa perlu mengisi kesunyian agar orang lain merasa senang. (Talker)','Memegang teguh dengan keras kepala dan tidak mau melepaskan hingga tujuan tercapai. (Tenacious)','Orang yang tanggap dan mengingat setiap kesempatan istimewa, cepat memberi isyarat yang baik. (Thoightful)','Mudah menerima pemikiran dan cara orang lain tanpa perlu tidak menyetujuinya. (Tolerant)'),
+(17,'Penuh kehidupan, kuat, dan penuh semangat. (Lively)','Pemberi pengarahan karena pembawaan yang terdorong untuk memimpin dan sering merasa sulit mem-percayai bahwa orang lain bisa melakukan pekerjaan dengan sama baiknya. (Leader)','Setia pada seseorang, gagasan, dan pekerja-an, terkadang dapat melampaui alasan. (Loyal)','Selalu bersedia men-dengarkan apa yang orang lain katakan. (Listener)'),
+(18,'Tak ternilai harganya, dicintai, pusat perhatian. (Cute)','Memegang ke-pemimpinan dan meng-harapkan orang lain mengikuti. (Chief)','Mengatur kehidupan, tugas, dan pemecahan masalah dengan membuat daftar. (Chartmaker)','Mudah puas dengan apa yang dimiliki, jarang iri hati. (Contented)'),
+(19,'Orang yang suka menghidupkan pesta sebagai diinginkan orang sebagai tamu pesta. (Populer)','Harus terus-menerus bekerja atau mencapai sesuatu, sering merasa sulit ber-istirahat. (Productive)','Menempatkan standar tinggi pada dirinya maupun orang lain. Menginginkan segala-galanya pada urutan semestinya.(Perfectionist)','Mudah bergaul, bersifat terbuka, mudah diajak bicara. (Pleasant)'),
+(20,'Kepribadian yang hidup, berlebihan, penuh tenaga. (Bouncy)','Tidak kenal takut, berani, terus terang, tidak takut akan resiko. (Bold)','Secara konsisten ingin membawa diri di dalam batas-batas apa yang dirasakan semestinya. (Behafed)','Kepribadian yang stabil dan berada di tengah-tengah. (Balanced)'),
+(21,'Memperlihatkan sedikit emosi / mimik. (Blank)','Menghindari perhatian akibat rasa malu. (Bashful)','Suka pamer, mem-perlihatkan apa yang gemerlap   dan kuat, terlalu bersuara. (Brassy)','Suka memerintah, mendominasi, kadang-kadang mengesalkan antar hubungan orang dewasa. (Bossy)'),
+(22,'Kurang teraturan-nya mempengaruhi hampir semua bidang ke-hidupannya. (Undisipline)','Merasa sulit mengenali masalah dan perasaan orang lain. (Unsympathetic)','Sulit memaafkan dan melupakan sakit hati yang pernah dilakukan, biasa mendendam. (Unforgiving)','Cenderung tidak ber-gairah, sering merasa bahwa bagaimana-pun sesuatu tidak akan berhasil. (Unenthusiastic)'),
+(23,'Suka menceritakan kembali suatu kisah tanpa menyadari bahwa cerita tersebut pernah diceritakan sebelumnya, selalu perlu sesuatu untuk dikatakan. (Repetitious)','Berjuang, melawan untuk menerima cara lain yang tidak sesuai dengan cara yang diinginkan. (Resistant)','Sering memendam rasa tidak senang akibat merasa tersinggung oleh sesuatu. (Resenful)','Tidak bersedia ikut terlibat terutama bila rumit. (Reticent)'),
+(24,'Punya ingatan kurang kuat, biasa-nya berkaitan dengan kurang disiplin dan tidak mau repot-repot mencatat hal-hal yang tidak menyenangkan. (Forgetful)','Langsung, blak-blakan, tidak sungkan mengatakan apa yang dipikirkan. (Farank)','Bersikeras tentang persoalan sepele, minta perhatian besar pada persoalan yang tidak penting. (Fussy)','Sering merasa sangat khawatir, sedih, dan gelisah. (Fearful)'),
+(25,'Lebih banyak bicara daripada mendengar-kan, bila sudah bicara sulit berhenti. (Interrupts)','Sulit bertahan untuk menghadapi kekesal-an. (Impatient)','Kurang percaya diri. (Insecure)','Sulit dalam membuat keputusan. (Indesecive)'),
+(26,'Bisa bergairah sesaat dan sedih pada saat berikutnya. Bersedia membantu kemudian menghilang. Berjanji akan datang tapi kemudian lupa untuk muncul. (Unpredictable)','Merasa sulit mem-perlihatkan kasih sayang dengan terbuka. (Unaffectionate)','Tuntutannya akan kesempurnaan terlalu tinggi dan dapat membuat orang lain menjauhinya. (Unpopular)','Tidak tertarik pada perkumpulan atau kelompok. (Uninfolved)'),
+(27,'Tidak punya cara yang konsisten untuk melakukan banyak hal. (Haphazard)','Bersikeras memaksa-kan caranya sendiri. (Headstrong)','Standar yang ditetapkan begitu tinggi sehingga orang lain sulit memuaskannya. (Hard to Please)','Lambat dalam bergerak dan sulit untuk ikut terlibat. (Hesitant)'),
+(28,'Memperbolehkan orang lain, termasuk anak-anak untuk melakukan apa saja sesukanya untuk menghindari diri kita tidak disukai. (Permissive)','Punya harga diri tinggi dan menganggap diri selalu benar dan yang terbaik dalam pekerja-an. (Proud)','Dalam mengharapkan yang terbaik, biasanya melihat sisi buruk sesuatu terlebih dahulu. (Pessimistic)','Memiliki kepribadian yang biasa saja dan tidak suka mem-perlihatkan banyak emosi. (Plain)'),
+(29,'Memiliki perangai seperti anak-anak yang mengutarakan diri dengan ngambek dan berbuat ber-lebihan tetapi kemudian melupakan-nya seketika. (Angered-Easily)','Mudah merasa ter-asing dari orang lain dikarenakan rasa tidak aman atau takut jangan-jangan orang lain tidak merasa senang bersamanya. (Alienated)','Mengobarkan per-debatan karena biasanya selalu benar dan terkadang tidak peduli bagaimana situasi saat itu. (Argumentative)','Bukan orang yang suka menetapkan tujuan dan tidak berharap menjadi orang yang seperti itu. (Aimless)'),
+(30,'Memiliki perspektif yang sederhana dan kekanak-kanakan, kurang pengertian terhadap tingkat kehidupan yang lebih mendalam. (Naive)','Penuh keyakinan, semangat, dan keberanian (sering dalam pengertian negatif). (Nervy)','Sikapnya jarang positif dan sering hanya melihat sisi buruk dari setiap situasi. (Negative-Atitude)','Mudah bergaul, tidak peduli, dan masa bodoh. (Nonchalat)'),
+(31,'Merasa senang mendapat pengharga-an dari orang lain. Sebagai penghibur menyukai tepuk tangan, tawa, dan penerimaan penonton. (Wants-Credit)','Menetapkan tujuan secara agresif serta harus terus produktif, merasa bersalah bila beristirahat, bukan ter-dorong oleh keinginan untuk sempurna melainkan imbalan. (Workaholic)','Suka menarik diri dan memerlukan banyak waktu untuk sendirian atau mengasingkan diri. (Withdrawn)','Secara konsisten merasa terganggu atau resah. (Worrier)'),
+(32,'Suka berbicara dan sulit mendengarkan. (Talkative)','Kadang-kadang me-nyatakan diri dengan cara yang agak menyinggung perasaan dan kurang per-timbangan. (Tactless)','Terlalu introspektif dan mudah tersinggung kalau disalahpahami. (Too Sensitive)','Lebih suka mundur dari situasi sulit. (Timid)'),
+(33,'Kurang memiliki ke-mampuan dalam membuat kehidupan menjadi teratur. (Disorganized)','Dengan paksa mengambil kontrol atas situasi atau orang lain, biasanya dengan mengatakan apa yang harus dilakukan. (Domineering)','Hampir sepanjang waktu merasa tertekan. (Depressed)','Mempunyai ciri khas selalu tidak tetap dan kurang keyakinan bahwa suatu hal akan berhasil. (Doubtful)'),
+(34,'Tidak menentu, serba berlawanan dengan tindakan dan emosi yang tidak berdasar-kan logika. (Inconsistant)','Tampaknya tidak bisa menerima sikap, pandangan, dan cara orang lain. (Intolerant)','Pemikiran dan perhatian ditujukan ke dalam, hidup di dalam diri sendiri. (Introvert)','Merasa bahwa ke-banyakan hal tidak penting dalam suatu cara atau cara yang lain. (Indifferent)'),
+(35,'Hidup dalam keadaan tidak teratur, tidak dapat menemukan banyak benda. (Messy)','Mempengaruhi dengan cerdik dan penuh tipu untuk kepentingan sendiri; dengan suatu cara dapat memaksakan kehendak. (Manipulative)','Bicara pelan kalau didesak, tidak mau repot-repot bicara dengan jelas. (Mumbles)','Tidak punya emosi yang tinggi, tetapi biasanya semangatnya merosot sekali, apalagi bila merasa tidak dihargai. (Moody)'),
+(36,'Perlu menjadi pusat perhatian, ingin dilihat. (Show Off)','Bertekad memaksakan kehendaknya, tidak mudah dibujuk, keras kepala. (Stubborn)','Tidak mudah percaya, mempertanyakan motif di balik suatu perkataan. (Skeptical)','Tidak sering bertindak atau berpikir cepat, sangat mengganggu. (Slow)'),
+(37,'Tawa dan suaranya dapat didengar di atas suara lainnya di di dalam ruangan. (Loud)','Tidak ragu-ragu mengatakan benar dan dapat memegang kendali. (Lord Over)','Memerlukan banyak waktu pribadi dan cenderung meng-hindari orang lain. (Loner)','Menilai pekerjaan dan kegiatan dengan ukuran berapa banyak tenaga yang dibutuhkan. (Lazy)'),
+(38,'Tidak punya kekuatan untuk berkonsentrasi atau menaruh per-hatian pada sesuatu. (Scatterbrained)','Punya kemarahan yang menuntut berdasarkan ketidak-sabaran. Kemarahan yang dinyatakan saat orang lain tak bergerak cukup cepat atau tidak menyelesaikan apa yang diperintahkan. (Short-Tempered)','Cenderung mencurigai atau tidak mempercayai gagasan orang lain. (Suspicious)','Lambat untuk me-mulai, perlu dorongan yang kuat untuk termotivasi. (Sluggish)'),
+(39,'Menyukai kegiatan baru terus-menerus karena tidak merasa senang melakukan hal yang sama sepanjang waktu. (Restless)','Bisa bertindak tergesa-gesa tanpa memikirkan dengan tuntas terlebih dahulu, biasanya karena ketidaksabaran. (Rash)','Secara sadar maupun tidak mendendam, menghukum orang yang melanggar, diam-diam menahan persahabatan /kasih sayang. (Revengeful)','Tidak bersedia untuk ikut terlibat dalam suatu hal. (Reluctant)'),
+(40,'Rentang perhatian kekanak-kanakan dan pendek, butuh banyak perubahan dan variasi supaya tak merasa bosan. (Changeable)','Cerdik, orang yang selalu bisa menemu-kan cara untuk mencapai tujuan yang diinginkan. (Crafty)','Selalu mengevaluasi dan membuat penilaian, sering memikirkan dan menyatakan reaksi negatif. (Critical)','Sering mengendur kan pendiriannya, bahkan ketika merasa benar untuk menghindari terjadinya konflik. (Comrimissing)');
+
 /*Table structure for table `data_uji` */
 
 DROP TABLE IF EXISTS `data_uji`;
@@ -195,11 +263,68 @@ CREATE TABLE `data_uji` (
 /*Data for the table `data_uji` */
 
 insert  into `data_uji`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_asli`,`kelas_hasil`,`nilai_sanguin`,`nilai_koleris`,`nilai_melankolis`,`nilai_plegmatis`) values 
-(1,'Aisyah Regina P','P',15,'Swasta',8,10,9,13,'Plegmatis',NULL,NULL,NULL,NULL,NULL),
-(2,'Emilia Nur Rohmah','P',13,'Negeri',10,4,14,12,'Melankolis',NULL,NULL,NULL,NULL,NULL),
-(3,'Faris Saifullah','L',14,'Swasta',15,8,10,7,'Sanguin',NULL,NULL,NULL,NULL,NULL),
-(4,'Rahmi Dwiki D.R','L',14,'Negeri',11,12,8,9,'Koleris',NULL,NULL,NULL,NULL,NULL),
-(5,'Husna Dhiya \'ul Ilmi','P',13,'Swasta',20,8,8,4,'Sanguin',NULL,NULL,NULL,NULL,NULL);
+(1,'Aisyah Regina P','P',15,'Swasta',8,10,9,13,'Plegmatis','Plegmatis',0.000018244613285229,0.00059555995157502,0.0000035470532349736,0.0011587045849578),
+(2,'Emilia Nur Rohmah','P',13,'Negeri',10,4,14,12,'Melankolis','Melankolis',0.000052538830317731,0.000000075713896319672,0.042882422632853,0.003922163179369),
+(3,'Faris Saifullah','L',14,'Swasta',15,8,10,7,'Sanguin','Sanguin',0.13033848176309,0.00021928229762564,0.000046887107613799,0.0000035782464993252),
+(4,'Rahmi Dwiki D.R','L',14,'Negeri',11,12,8,9,'Koleris','Koleris',0.021822663107099,0.058366611218614,0.0000047782717672805,0.00016654278086156),
+(5,'Husna Dhiya \'ul Ilmi','P',13,'Swasta',20,8,8,4,'Sanguin','Sanguin',0.0029726552756786,0.0000003834186761643,0.0000000001545948879837,0.0000000000056588013135669);
+
+/*Table structure for table `jawaban_kuisioner` */
+
+DROP TABLE IF EXISTS `jawaban_kuisioner`;
+
+CREATE TABLE `jawaban_kuisioner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL DEFAULT '0',
+  `id_siswa` int(11) NOT NULL DEFAULT '0',
+  `id_soal` int(11) NOT NULL DEFAULT '0',
+  `jawaban` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+
+/*Data for the table `jawaban_kuisioner` */
+
+insert  into `jawaban_kuisioner`(`id`,`id_user`,`id_siswa`,`id_soal`,`jawaban`) values 
+(1,2,1,1,'B'),
+(2,2,1,2,'C'),
+(3,2,1,3,'C'),
+(4,2,1,4,'C'),
+(5,2,1,5,'C'),
+(6,2,1,6,'C'),
+(7,2,1,7,'B'),
+(8,2,1,8,'B'),
+(9,2,1,9,'B'),
+(10,2,1,10,'B'),
+(11,2,1,11,'B'),
+(12,2,1,12,'C'),
+(13,2,1,13,'A'),
+(14,2,1,14,'A'),
+(15,2,1,15,'A'),
+(16,2,1,16,'D'),
+(17,2,1,17,'D'),
+(18,2,1,18,'D'),
+(19,2,1,19,'A'),
+(20,2,1,20,'B'),
+(21,2,1,21,'A'),
+(22,2,1,22,'C'),
+(23,2,1,23,'C'),
+(24,2,1,24,'C'),
+(25,2,1,25,'D'),
+(26,2,1,26,'C'),
+(27,2,1,27,'C'),
+(28,2,1,28,'B'),
+(29,2,1,29,'B'),
+(30,2,1,30,'D'),
+(31,2,1,31,'B'),
+(32,2,1,32,'B'),
+(33,2,1,33,'B'),
+(34,2,1,34,'B'),
+(35,2,1,35,'D'),
+(36,2,1,36,'B'),
+(37,2,1,37,'D'),
+(38,2,1,38,'B'),
+(39,2,1,39,'B'),
+(40,2,1,40,'D');
 
 /*Table structure for table `users` */
 
