@@ -49,8 +49,8 @@ if(isset($_GET['menu'])){
                                 
                                 <li><a <?php echo ($menu=='laporan_hasil')?"class='menu-top-active'":""; ?> 
                                         href="index.php?menu=laporan_hasil">Laporan Hasil Klasifikasi</a></li>
-                                <li><a <?php echo ($menu=='data_user')?"class='menu-top-active'":""; ?> 
-                                        href="index.php?menu=data_siswa">Data User Siswa</a></li>
+                                <li><a <?php echo ($menu=='data_siswa')?"class='menu-top-active'":""; ?> 
+                                        href="index.php?menu=data_siswa">Data Siswa</a></li>
                                 <?php
                             }
                             ?>
