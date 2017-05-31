@@ -5,7 +5,7 @@ function can_access_menu($menu){
         return true;
     }
     if($_SESSION['kepribadian_naive_bayes_level']==1 & (($menu=='data_latih')
-             || ($menu=='uji_akurasi') || ($menu=='laporan_hasil') || ($menu=='data_siswa'))){
+             || ($menu=='uji_akurasi') || ($menu=='laporan_hasil') || ($menu=='data_siswa') || $menu=='data_soal')){
         return true;
     }
     return false;

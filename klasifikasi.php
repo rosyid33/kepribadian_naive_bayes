@@ -162,6 +162,11 @@ include_once "import/excel_reader2.php";
                             echo "Nilai Plegmatis:".$hasilSiswa['nilai_plegmatis'];
                     }
                     else{
+
+                        if($jumlah <= 0){
+                            echo "Data Soal masih belum ada...";
+                        }
+                        else{
                 ?>
                 <!--UPLOAD EXCEL FORM-->
                 <form method="post" action="">
@@ -202,6 +207,7 @@ include_once "import/excel_reader2.php";
                     </div>
                 </form>
                 <?php
+                        }
                     }
                 }
                 ?>

@@ -44,6 +44,8 @@ if(isset($_GET['menu'])){
                                 ?>
                                 <li><a <?php echo ($menu=='data_latih')?"class='menu-top-active'":""; ?>
                                         href="index.php?menu=data_latih">Data Latih</a></li>
+                                <li><a <?php echo ($menu=='data_soal')?"class='menu-top-active'":""; ?>
+                                        href="index.php?menu=data_soal">Data Soal</a></li>
                                 <li><a <?php echo ($menu=='uji_akurasi')?"class='menu-top-active'":""; ?> 
                                         href="index.php?menu=uji_akurasi">Uji Akurasi</a></li>
                                 
