@@ -164,7 +164,7 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
 	$s2_usia_koleris = get_s2_populasi($db_object, 'usia', 'Koleris', $x_usia_koleris, $jumlah_koleris);
         //S2usia Melankolis
 	$s2_usia_melankolis = get_s2_populasi($db_object, 'usia', 'Melankolis', $x_usia_melankolis, $jumlah_melankolis);
-        //S2usia Koleris
+        //S2usia Plegmatis
 	$s2_usia_plegmatis = get_s2_populasi($db_object, 'usia', 'Plegmatis', $x_usia_plegmatis, $jumlah_plegmatis);
         if($show_perhitungan){
 	echo "S2 Usia Sanguin=".number_format($s2_usia_sanguin, dec())."<br>";
@@ -181,6 +181,16 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
 	$s_usia_melankolis = sqrt($s2_usia_melankolis);
         //S usia Plegmatis
 	$s_usia_plegmatis = sqrt($s2_usia_plegmatis);
+        
+        //s2 ^2 usia sanguin
+        $s2_pangkat2_usia_sanguin = pow($s2_usia_sanguin, 2);
+        //s2 ^2 usia koleris
+        $s2_pangkat2_usia_koleris = pow($s2_usia_koleris, 2);
+        //s2 ^2 usia melankolis
+        $s2_pangkat2_usia_melankolis = pow($s2_usia_melankolis, 2);
+        //s2 ^2 usia plegmatis
+        $s2_pangkat2_usia_plegmatis = pow($s2_usia_plegmatis, 2);
+        
         if($show_perhitungan){
 	echo "S Usia Sanguin=".number_format($s_usia_sanguin, dec())."<br>";
 	echo "S Usia Koleris=".number_format($s_usia_koleris, dec())."<br>";
@@ -239,6 +249,15 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         echo "S Jawaban A Melankolis=".number_format($s_jawaban_a_melankolis, dec())."<br>";
         echo "S Jawaban A Plegmatis=".number_format($s_jawaban_a_plegmatis, dec())."<br>";
         }
+        //s2 ^2 jawaban_a sanguin
+        $s2_pangkat2_jawaban_a_sanguin = pow($s2_jawaban_a_sanguin, 2);
+        //s2 ^2 jawaban_a koleris
+        $s2_pangkat2_jawaban_a_koleris = pow($s2_jawaban_a_koleris, 2);
+        //s2 ^2 jawaban_a melankolis
+        $s2_pangkat2_jawaban_a_melankolis = pow($s2_jawaban_a_melankolis, 2);
+        //s2 ^2 jawaban_a plegmatis
+        $s2_pangkat2_jawaban_a_plegmatis = pow($s2_jawaban_a_plegmatis, 2);
+        
         //==================================================
         //jawaban_b
         //x jawaban_b sanguin
@@ -291,6 +310,15 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         echo "S Jawaban B Melankolis=".number_format($s_jawaban_b_melankolis, dec())."<br>";
         echo "S Jawaban B Plegmatis=".number_format($s_jawaban_b_plegmatis, dec())."<br>";
         }
+        
+        //s2 ^2 jawaban_b sanguin
+        $s2_pangkat2_jawaban_b_sanguin = pow($s2_jawaban_b_sanguin, 2);
+        //s2 ^2 jawaban_b koleris
+        $s2_pangkat2_jawaban_b_koleris = pow($s2_jawaban_b_koleris, 2);
+        //s2 ^2 jawaban_b melankolis
+        $s2_pangkat2_jawaban_b_melankolis = pow($s2_jawaban_b_melankolis, 2);
+        //s2 ^2 jawaban_b plegmatis
+        $s2_pangkat2_jawaban_b_plegmatis = pow($s2_jawaban_b_plegmatis, 2);
         //========================================================
         //jawaban_c
         //x jawaban_c sanguin
@@ -343,6 +371,15 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         echo "S Jawaban C Melankolis=".number_format($s_jawaban_c_melankolis, dec())."<br>";
         echo "S Jawaban C Plegmatis=".number_format($s_jawaban_c_plegmatis, dec())."<br>";
         }
+        
+        //s2 ^2 jawaban_c sanguin
+        $s2_pangkat2_jawaban_c_sanguin = pow($s2_jawaban_c_sanguin, 2);
+        //s2 ^2 jawaban_c koleris
+        $s2_pangkat2_jawaban_c_koleris = pow($s2_jawaban_c_koleris, 2);
+        //s2 ^2 jawaban_c melankolis
+        $s2_pangkat2_jawaban_c_melankolis = pow($s2_jawaban_c_melankolis, 2);
+        //s2 ^2 jawaban_c plegmatis
+        $s2_pangkat2_jawaban_c_plegmatis = pow($s2_jawaban_c_plegmatis, 2);
         //===============================================================
         //x jawaban_d sanguin
 	$jumlah_jawaban_d_sanguin = get_jumlah_sum_atribut($db_object, "jawaban_d", "Sanguin");
@@ -394,36 +431,50 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         echo "S Jawaban D Melankolis=".number_format($s_jawaban_d_melankolis, dec())."<br>";
         echo "S Jawaban D Plegmatis=".number_format($s_jawaban_d_plegmatis, dec())."<br>";
         }
+        
+        //s2 ^2 jawaban_d sanguin
+        $s2_pangkat2_jawaban_d_sanguin = pow($s2_jawaban_d_sanguin, 2);
+        //s2 ^2 jawaban_d koleris
+        $s2_pangkat2_jawaban_d_koleris = pow($s2_jawaban_d_koleris, 2);
+        //s2 ^2 jawaban_d melankolis
+        $s2_pangkat2_jawaban_d_melankolis = pow($s2_jawaban_d_melankolis, 2);
+        //s2 ^2 jawaban_d plegmatis
+        $s2_pangkat2_jawaban_d_plegmatis = pow($s2_jawaban_d_plegmatis, 2);
         //======================================================================
         //#HITUNG PROBABILITAS DENGAN DATA UJI
         if($show_perhitungan){
         echo "<strong><h3>Probabilitas<br></h3></strong>";
         }
-	$satu_per_akar_dua_phi = 1/(sqrt(2*3.14));
+	$dua_phi = (2*3.14);
         //#usia
         //sanguin
-	$depan_usia_sanguin = 1/($satu_per_akar_dua_phi*$s_usia_sanguin);
-	$belakang_usia_sanguin = exp( ((pow($usia-$x_usia_sanguin,2)) / (2*$s2_usia_sanguin)) * -1);
-	$prob_usia_sanguin = $depan_usia_sanguin * $belakang_usia_sanguin;
+	$depan_usia_sanguin = sqrt($dua_phi*$s2_usia_sanguin);
+	$belakang_usia_sanguin = exp( ((pow($usia-$x_usia_sanguin,2)) / (2*$s2_pangkat2_usia_sanguin)));
+	$prob_usia_sanguin = 1/($depan_usia_sanguin * $belakang_usia_sanguin);
         //koleris
-	$depan_usia_koleris = 1/($satu_per_akar_dua_phi*$s_usia_koleris);
-	$belakang_usia_koleris = exp( ((pow($usia-$x_usia_koleris,2)) / (2*$s2_usia_koleris)) * -1);
-	$prob_usia_koleris = $depan_usia_koleris * $belakang_usia_koleris;
+	$depan_usia_koleris = sqrt($dua_phi*$s2_usia_koleris);
+	$belakang_usia_koleris = exp( ((pow($usia-$x_usia_koleris,2)) / (2*$s2_pangkat2_usia_koleris)));
+	$prob_usia_koleris = 1/($depan_usia_koleris * $belakang_usia_koleris);
         //melankolis
-	$depan_usia_melankolis = 1/($satu_per_akar_dua_phi*$s_usia_melankolis);
-	$belakang_usia_melankolis = exp( ((pow($usia-$x_usia_melankolis,2)) / (2*$s2_usia_melankolis)) * -1);
-	$prob_usia_melankolis = $depan_usia_melankolis * $belakang_usia_melankolis;
+	$depan_usia_melankolis = sqrt($dua_phi*$s2_usia_melankolis);
+	$belakang_usia_melankolis = exp( ((pow($usia-$x_usia_melankolis,2)) / (2*$s2_pangkat2_usia_melankolis)));
+	$prob_usia_melankolis = 1/($depan_usia_melankolis * $belakang_usia_melankolis);
         //plegmatis
-	$depan_usia_plegmatis = 1/($satu_per_akar_dua_phi*$s_usia_plegmatis);
-	$belakang_usia_plegmatis = exp( ((pow($usia-$x_usia_plegmatis,2)) / (2*$s2_usia_plegmatis)) * -1);
-	$prob_usia_plegmatis = $depan_usia_plegmatis * $belakang_usia_plegmatis;
+	$depan_usia_plegmatis = sqrt($dua_phi*$s2_usia_plegmatis);
+	$belakang_usia_plegmatis = exp( ((pow($usia-$x_usia_plegmatis,2)) / (2*$s2_pangkat2_usia_plegmatis)));
+	$prob_usia_plegmatis = 1/($depan_usia_plegmatis * $belakang_usia_plegmatis);
         //display
         if($show_perhitungan){
 	echo "<br>";
-	echo "P(usia|Sanguin)=".number_format($prob_usia_sanguin, dec())."<br>";
-	echo "P(usia|Koleris)=".number_format($prob_usia_koleris, dec())."<br>";
-        echo "P(usia|Melankolis)=".number_format($prob_usia_melankolis, dec())."<br>";
-        echo "P(usia|Plegmatis)=".number_format($prob_usia_plegmatis, dec())."<br>";
+//	echo "P(usia|Sanguin)=".number_format($prob_usia_sanguin, dec())."<br>";
+//	echo "P(usia|Koleris)=".number_format($prob_usia_koleris, dec())."<br>";
+//        echo "P(usia|Melankolis)=".number_format($prob_usia_melankolis, dec())."<br>";
+//        echo "P(usia|Plegmatis)=".number_format($prob_usia_plegmatis, dec())."<br>";
+        echo "P(usia|Sanguin)=".($prob_usia_sanguin)."<br>";
+	echo "P(usia|Koleris)=".($prob_usia_koleris)."<br>";
+        echo "P(usia|Melankolis)=".($prob_usia_melankolis)."<br>";
+        echo "P(usia|Plegmatis)=".($prob_usia_plegmatis)."<br>";
+        
         }
 	//probablitas jenis_kelamin
 	$prob_jenis_kelamin_sanguin = get_jumlah_atribut($db_object, "jenis_kelamin", $jenis_kelamin, "Sanguin") / $jumlah_sanguin;
@@ -452,21 +503,25 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         
         //#jawaban_a
         //sanguin
-	$depan_jawaban_a_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_a_sanguin);
-	$belakang_jawaban_a_sanguin = exp( ((pow($jawaban_a-$x_jawaban_a_sanguin,2)) / (2*$s2_jawaban_a_sanguin)) * -1);
-	$prob_jawaban_a_sanguin = $depan_jawaban_a_sanguin * $belakang_jawaban_a_sanguin;
+//	$depan_usia_sanguin = sqrt($dua_phi*$s2_usia_sanguin);
+//	$belakang_usia_sanguin = exp( ((pow($usia-$x_usia_sanguin,2)) / (2*$s2_pangkat2_usia_sanguin)));
+//	$prob_usia_sanguin = 1/($depan_usia_sanguin * $belakang_usia_sanguin);
+        //sanguin
+	$depan_jawaban_a_sanguin = sqrt($dua_phi*$s2_jawaban_a_sanguin);
+	$belakang_jawaban_a_sanguin = exp( ((pow($jawaban_a-$x_jawaban_a_sanguin,2)) / (2*$s2_pangkat2_jawaban_a_sanguin)));
+	$prob_jawaban_a_sanguin = 1/($depan_jawaban_a_sanguin * $belakang_jawaban_a_sanguin);
         //koleris
-	$depan_jawaban_a_koleris = 1/($satu_per_akar_dua_phi*$s_jawaban_a_koleris);
-	$belakang_jawaban_a_koleris = exp( ((pow($jawaban_a-$x_jawaban_a_koleris,2)) / (2*$s2_jawaban_a_koleris)) * -1);
-	$prob_jawaban_a_koleris = $depan_jawaban_a_koleris * $belakang_jawaban_a_koleris;
+	$depan_jawaban_a_koleris = sqrt($dua_phi*$s2_jawaban_a_koleris);
+	$belakang_jawaban_a_koleris = exp( ((pow($jawaban_a-$x_jawaban_a_koleris,2)) / (2*$s2_pangkat2_jawaban_a_koleris)));
+	$prob_jawaban_a_koleris = 1/($depan_jawaban_a_koleris * $belakang_jawaban_a_koleris);
         //melankolis
-	$depan_jawaban_a_melankolis = 1/($satu_per_akar_dua_phi*$s_jawaban_a_melankolis);
-	$belakang_jawaban_a_melankolis = exp( ((pow($jawaban_a-$x_jawaban_a_melankolis,2)) / (2*$s2_jawaban_a_melankolis)) * -1);
-	$prob_jawaban_a_melankolis = $depan_jawaban_a_melankolis * $belakang_jawaban_a_melankolis;
+	$depan_jawaban_a_melankolis = sqrt($dua_phi*$s2_jawaban_a_melankolis);
+	$belakang_jawaban_a_melankolis = exp( ((pow($jawaban_a-$x_jawaban_a_melankolis,2)) / (2*$s2_pangkat2_jawaban_a_melankolis)));
+	$prob_jawaban_a_melankolis = 1/($depan_jawaban_a_melankolis * $belakang_jawaban_a_melankolis);
         //plegmatis
-	$depan_jawaban_a_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_a_plegmatis);
-	$belakang_jawaban_a_plegmatis = exp( ((pow($jawaban_a-$x_jawaban_a_plegmatis,2)) / (2*$s2_jawaban_a_plegmatis)) * -1);
-	$prob_jawaban_a_plegmatis = $depan_jawaban_a_plegmatis * $belakang_jawaban_a_plegmatis;
+	$depan_jawaban_a_plegmatis = sqrt($dua_phi*$s2_jawaban_a_plegmatis);
+	$belakang_jawaban_a_plegmatis = exp( ((pow($jawaban_a-$x_jawaban_a_plegmatis,2)) / (2*$s2_pangkat2_jawaban_a_plegmatis)));
+	$prob_jawaban_a_plegmatis = 1/($depan_jawaban_a_plegmatis * $belakang_jawaban_a_plegmatis);
         //display
         if($show_perhitungan){
 	echo "<br>";
@@ -478,21 +533,21 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         //======================================================================
         //#jawaban_b
         //sanguin
-	$depan_jawaban_b_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_b_sanguin);
-	$belakang_jawaban_b_sanguin = exp( ((pow($jawaban_b-$x_jawaban_b_sanguin,2)) / (2*$s2_jawaban_b_sanguin)) * -1);
-	$prob_jawaban_b_sanguin = $depan_jawaban_b_sanguin * $belakang_jawaban_b_sanguin;
+	$depan_jawaban_b_sanguin = sqrt($dua_phi*$s2_jawaban_b_sanguin);
+	$belakang_jawaban_b_sanguin = exp( ((pow($jawaban_b-$x_jawaban_b_sanguin,2)) / (2*$s2_pangkat2_jawaban_b_sanguin)));
+	$prob_jawaban_b_sanguin = 1/($depan_jawaban_b_sanguin * $belakang_jawaban_b_sanguin);
         //koleris
-	$depan_jawaban_b_koleris = 1/($satu_per_akar_dua_phi*$s_jawaban_b_koleris);
-	$belakang_jawaban_b_koleris = exp( ((pow($jawaban_b-$x_jawaban_b_koleris,2)) / (2*$s2_jawaban_b_koleris)) * -1);
-	$prob_jawaban_b_koleris = $depan_jawaban_b_koleris * $belakang_jawaban_b_koleris;
+	$depan_jawaban_b_koleris = sqrt($dua_phi*$s2_jawaban_b_koleris);
+	$belakang_jawaban_b_koleris = exp( ((pow($jawaban_b-$x_jawaban_b_koleris,2)) / (2*$s2_pangkat2_jawaban_b_koleris)));
+	$prob_jawaban_b_koleris = 1/($depan_jawaban_b_koleris * $belakang_jawaban_b_koleris);
         //melankolis
-	$depan_jawaban_b_melankolis = 1/($satu_per_akar_dua_phi*$s_jawaban_b_melankolis);
-	$belakang_jawaban_b_melankolis = exp( ((pow($jawaban_b-$x_jawaban_b_melankolis,2)) / (2*$s2_jawaban_b_melankolis)) * -1);
-	$prob_jawaban_b_melankolis = $depan_jawaban_b_melankolis * $belakang_jawaban_b_melankolis;
+	$depan_jawaban_b_melankolis = sqrt($dua_phi*$s2_jawaban_b_melankolis);
+	$belakang_jawaban_b_melankolis = exp( ((pow($jawaban_b-$x_jawaban_b_melankolis,2)) / (2*$s2_pangkat2_jawaban_b_melankolis)));
+	$prob_jawaban_b_melankolis = 1/($depan_jawaban_b_melankolis * $belakang_jawaban_b_melankolis);
         //plegmatis
-	$depan_jawaban_b_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_b_plegmatis);
-	$belakang_jawaban_b_plegmatis = exp( ((pow($jawaban_b-$x_jawaban_b_plegmatis,2)) / (2*$s2_jawaban_b_plegmatis)) * -1);
-	$prob_jawaban_b_plegmatis = $depan_jawaban_b_plegmatis * $belakang_jawaban_b_plegmatis;
+	$depan_jawaban_b_plegmatis = sqrt($dua_phi*$s2_jawaban_b_plegmatis);
+	$belakang_jawaban_b_plegmatis = exp( ((pow($jawaban_b-$x_jawaban_b_plegmatis,2)) / (2*$s2_pangkat2_jawaban_b_plegmatis)));
+	$prob_jawaban_b_plegmatis = 1/($depan_jawaban_b_plegmatis * $belakang_jawaban_b_plegmatis);
         //display
         if($show_perhitungan){
 	echo "<br>";
@@ -504,21 +559,21 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         //======================================================================
         //#jawaban_c
         //sanguin
-	$depan_jawaban_c_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_c_sanguin);
-	$belakang_jawaban_c_sanguin = exp( ((pow($jawaban_c-$x_jawaban_c_sanguin,2)) / (2*$s2_jawaban_c_sanguin)) * -1);
-	$prob_jawaban_c_sanguin = $depan_jawaban_c_sanguin * $belakang_jawaban_c_sanguin;
+	$depan_jawaban_c_sanguin = sqrt($dua_phi*$s2_jawaban_c_sanguin);
+	$belakang_jawaban_c_sanguin = exp( ((pow($jawaban_c-$x_jawaban_c_sanguin,2)) / (2*$s2_pangkat2_jawaban_c_sanguin)));
+	$prob_jawaban_c_sanguin = 1/($depan_jawaban_c_sanguin * $belakang_jawaban_c_sanguin);
         //koleris
-	$depan_jawaban_c_koleris = 1/($satu_per_akar_dua_phi*$s_jawaban_c_koleris);
-	$belakang_jawaban_c_koleris = exp( ((pow($jawaban_c-$x_jawaban_c_koleris,2)) / (2*$s2_jawaban_c_koleris)) * -1);
-	$prob_jawaban_c_koleris = $depan_jawaban_c_koleris * $belakang_jawaban_c_koleris;
+	$depan_jawaban_c_koleris = sqrt($dua_phi*$s2_jawaban_c_koleris);
+	$belakang_jawaban_c_koleris = exp( ((pow($jawaban_c-$x_jawaban_c_koleris,2)) / (2*$s2_pangkat2_jawaban_c_koleris)));
+	$prob_jawaban_c_koleris = 1/($depan_jawaban_c_koleris * $belakang_jawaban_c_koleris);
         //melankolis
-	$depan_jawaban_c_melankolis = 1/($satu_per_akar_dua_phi*$s_jawaban_c_melankolis);
-	$belakang_jawaban_c_melankolis = exp( ((pow($jawaban_c-$x_jawaban_c_melankolis,2)) / (2*$s2_jawaban_c_melankolis)) * -1);
-	$prob_jawaban_c_melankolis = $depan_jawaban_c_melankolis * $belakang_jawaban_c_melankolis;
+	$depan_jawaban_c_melankolis = sqrt($dua_phi*$s2_jawaban_c_melankolis);
+	$belakang_jawaban_c_melankolis = exp( ((pow($jawaban_c-$x_jawaban_c_melankolis,2)) / (2*$s2_pangkat2_jawaban_c_melankolis)));
+	$prob_jawaban_c_melankolis = 1/($depan_jawaban_c_melankolis * $belakang_jawaban_c_melankolis);
         //plegmatis
-	$depan_jawaban_c_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_c_plegmatis);
-	$belakang_jawaban_c_plegmatis = exp( ((pow($jawaban_c-$x_jawaban_c_plegmatis,2)) / (2*$s2_jawaban_c_plegmatis)) * -1);
-	$prob_jawaban_c_plegmatis = $depan_jawaban_c_plegmatis * $belakang_jawaban_c_plegmatis;
+	$depan_jawaban_c_plegmatis = sqrt($dua_phi*$s2_jawaban_c_plegmatis);
+	$belakang_jawaban_c_plegmatis = exp( ((pow($jawaban_c-$x_jawaban_c_plegmatis,2)) / (2*$s2_pangkat2_jawaban_c_plegmatis)));
+	$prob_jawaban_c_plegmatis = 1/($depan_jawaban_c_plegmatis * $belakang_jawaban_c_plegmatis);
         //display
         if($show_perhitungan){
 	echo "<br>";
@@ -530,21 +585,24 @@ function ProsesNaiveBayes($db_object, $id_data_uji=0, $jenis_kelamin, $usia, $se
         //======================================================================
         //#jawaban_d
         //sanguin
-	$depan_jawaban_d_sanguin = 1/($satu_per_akar_dua_phi*$s_jawaban_d_sanguin);
-	$belakang_jawaban_d_sanguin = exp( ((pow($jawaban_d-$x_jawaban_d_sanguin,2)) / (2*$s2_jawaban_d_sanguin)) * -1);
-	$prob_jawaban_d_sanguin = $depan_jawaban_d_sanguin * $belakang_jawaban_d_sanguin;
+        //        $depan_jawaban_a_plegmatis = sqrt($dua_phi*$s2_jawaban_a_plegmatis);
+//	$belakang_jawaban_a_plegmatis = exp( ((pow($jawaban_a-$x_jawaban_a_plegmatis,2)) / (2*$s2_pangkat2_jawaban_a_plegmatis)));
+//	$prob_jawaban_a_plegmatis = 1/($depan_jawaban_a_plegmatis * $belakang_jawaban_a_plegmatis);
+	$depan_jawaban_d_sanguin = sqrt($dua_phi*$s2_jawaban_d_sanguin);
+	$belakang_jawaban_d_sanguin = exp( ((pow($jawaban_d-$x_jawaban_d_sanguin,2)) / (2*$s2_jawaban_d_sanguin)));
+	$prob_jawaban_d_sanguin = 1/($depan_jawaban_d_sanguin * $belakang_jawaban_d_sanguin);
         //koleris
-	$depan_jawaban_d_koleris = 1/($satu_per_akar_dua_phi*$s_jawaban_d_koleris);
-	$belakang_jawaban_d_koleris = exp( ((pow($jawaban_d-$x_jawaban_d_koleris,2)) / (2*$s2_jawaban_d_koleris)) * -1);
-	$prob_jawaban_d_koleris = $depan_jawaban_d_koleris * $belakang_jawaban_d_koleris;
+	$depan_jawaban_d_koleris = sqrt($dua_phi*$s2_jawaban_d_koleris);
+	$belakang_jawaban_d_koleris = exp( ((pow($jawaban_d-$x_jawaban_d_koleris,2)) / (2*$s2_jawaban_d_koleris)));
+	$prob_jawaban_d_koleris = 1/($depan_jawaban_d_koleris * $belakang_jawaban_d_koleris);
         //melankolis
-	$depan_jawaban_d_melankolis = 1/($satu_per_akar_dua_phi*$s_jawaban_d_melankolis);
-	$belakang_jawaban_d_melankolis = exp( ((pow($jawaban_d-$x_jawaban_d_melankolis,2)) / (2*$s2_jawaban_d_melankolis)) * -1);
-	$prob_jawaban_d_melankolis = $depan_jawaban_d_melankolis * $belakang_jawaban_d_melankolis;
+	$depan_jawaban_d_melankolis = sqrt($dua_phi*$s2_jawaban_d_melankolis);
+	$belakang_jawaban_d_melankolis = exp( ((pow($jawaban_d-$x_jawaban_d_melankolis,2)) / (2*$s2_jawaban_d_melankolis)));
+	$prob_jawaban_d_melankolis = 1/($depan_jawaban_d_melankolis * $belakang_jawaban_d_melankolis);
         //plegmatis
-	$depan_jawaban_d_plegmatis = 1/($satu_per_akar_dua_phi*$s_jawaban_d_plegmatis);
-	$belakang_jawaban_d_plegmatis = exp( ((pow($jawaban_d-$x_jawaban_d_plegmatis,2)) / (2*$s2_jawaban_d_plegmatis)) * -1);
-	$prob_jawaban_d_plegmatis = $depan_jawaban_d_plegmatis * $belakang_jawaban_d_plegmatis;
+	$depan_jawaban_d_plegmatis = sqrt($dua_phi*$s2_jawaban_d_plegmatis);
+	$belakang_jawaban_d_plegmatis = exp( ((pow($jawaban_d-$x_jawaban_d_plegmatis,2)) / (2*$s2_jawaban_d_plegmatis)));
+	$prob_jawaban_d_plegmatis = 1/($depan_jawaban_d_plegmatis * $belakang_jawaban_d_plegmatis);
         //display
         if($show_perhitungan){
 	echo "<br>";
