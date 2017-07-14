@@ -40,14 +40,16 @@ include_once "import/excel_reader2.php";
 //                for($c=1; $c<=$column; $c++){
 //                    $value[$c] = $data->val($i, $c);
 //                }
-                $value = "(\"".$data->val($i, 2)."\", '".$data->val($i, 3)."', "
-                        .$data->val($i, 4).", '".$data->val($i, 5)."', "
-                        .$data->val($i, 6).", ".$data->val($i, 7).", "
-                        .$data->val($i, 8).", ".$data->val($i, 9).", '".$data->val($i, 10)."')";
-                $sql = "INSERT INTO data_uji "
-                    . " (nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli)"
-                    . " VALUES ".$value;
-                $result = $db_object->db_query($sql);
+                if(!empty($data->val($i, 2))){
+                    $value = "(\"".$data->val($i, 2)."\", '".$data->val($i, 3)."', "
+                            .$data->val($i, 4).", '".$data->val($i, 5)."', "
+                            .$data->val($i, 6).", ".$data->val($i, 7).", "
+                            .$data->val($i, 8).", ".$data->val($i, 9).", '".$data->val($i, 10)."')";
+                    $sql = "INSERT INTO data_uji "
+                        . " (nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli)"
+                        . " VALUES ".$value;
+                    $result = $db_object->db_query($sql);
+                }
             }
             //$values = implode(",", $value);
             
