@@ -101,6 +101,16 @@ include_once "import/excel_reader2.php";
                                 .$jawaban_a. ", ".$jawaban_b.", ".$jawaban_c.", ".$jawaban_d.", "
                                 . "'".$hasil[0]."', '".$hasil[1]."', '".$hasil[2]."', '".$hasil[3]."', '".$hasil[4]."')";
                         $db_object->db_query($sql_in_hasil);
+                        
+                        //simpan juga ke data uji
+                        $sql_data_uji = "INSERT INTO data_uji"
+                                . "(nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli) "
+                                . " VALUES "
+                                . " ('".$siswa['nama_siswa']."' , '".$siswa['jenis_kelamin']."' , '".$siswa['usia']."' "
+                                . ", '".$siswa['sekolah']."' , '".$jawaban_a."' , '".$jawaban_b."' "
+                                . ", '".$jawaban_c."' , '".$jawaban_d."' , '".$hasil[0]."' ) ";
+                        $db_object->db_query($sql_data_uji);
+                        //nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli
                     }
                     
                     }
